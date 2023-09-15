@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        <meta charset="utf-8">
+        <link href="assets/images/logo.png" rel="shortcut icon">
+        <title><%= title %></title>
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="assets/css/app.css" />
+        <!-- END: CSS Assets-->
+    </head>
+    <!-- END: Head -->
+    <body class="py-5 md:py-0">
+        <!-- BEGIN: Mobile Menu -->
+        <div class="mobile-menu md:hidden">
+            <div class="mobile-menu-bar">
+                <a href="" class="flex mr-auto">
+                    <img alt="Global Water Blasting - Super Admin" class="w-8" src="assets/images/logo.png">
+                </a>
+                <a href="javascript:;" class="mobile-menu-toggler"> <i data-lucide="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+            </div>
+            <div class="scrollable">
+                <a href="javascript:;" class="mobile-menu-toggler"> <i data-lucide="x-circle" class="w-8 h-8 text-white transform -rotate-90"></i> </a>
+                <ul class="scrollable__content py-2">
+                    <li>
+                        <a href="javascript:;.html" class="menu menu--active">
+                            <div class="menu__icon"> <i data-lucide="home"></i> </div>
+                            <div class="menu__title"> Dashboard <i data-lucide="chevron-down" class="menu__sub-icon transform rotate-180"></i> </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- END: Mobile Menu -->
+        <!-- BEGIN: Top Bar -->
+        <div class="top-bar-boxed h-[70px] md:h-[65px] z-[51] border-b border-white/[0.08] mt-12 md:mt-0 -mx-3 sm:-mx-8 md:-mx-0 px-3 md:border-b-0 relative md:fixed md:inset-x-0 md:top-0 sm:px-8 md:px-10 md:pt-10 md:bg-gradient-to-b md:from-slate-100 md:to-transparent dark:md:from-darkmode-700">
+            <div class="h-full flex items-center">
+                <!-- BEGIN: Logo -->
+                <a href="" class="logo -intro-x hidden md:flex xl:w-[180px] block">
+                    <img alt="Midone - HTML Admin Template" class="logo__image w-[90px]" src="assets/images/logo.png">
+                </a>
+                <!-- END: Logo -->
+                <!-- BEGIN: Breadcrumb -->
+                <nav aria-label="breadcrumb" class="-intro-x h-[45px] mr-auto">
+                    <ol class="breadcrumb breadcrumb-light">
+                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                    </ol>
+                </nav>
+                <!-- END: Breadcrumb -->
+                <!-- BEGIN: Account Menu -->
+                <div class="intro-x dropdown w-8 h-8">
+                    <div class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110" role="button" aria-expanded="false" data-tw-toggle="dropdown">
+                        <img alt="Midone - HTML Admin Template" src="assets/images/profile-5.jpg">
+                    </div>
+                    <div class="dropdown-menu w-56">
+                        <ul class="dropdown-content bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
+                            <li class="p-2">
+                                <div class="font-medium">Blobal Water Blasting</div>
+                                <div class="text-xs text-white/60 mt-0.5 dark:text-slate-500">Super Admin</div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider border-white/[0.08]">
+                            </li>
+                            <li>
+                                <a href="" class="dropdown-item hover:bg-white/5"> <i data-lucide="user" class="w-4 h-4 mr-2"></i> Profile </a>
+                            </li>
+                            <li>
+                                <a href="" class="dropdown-item hover:bg-white/5"> <i data-lucide="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- END: Account Menu -->
+            </div>
+        </div>
+        <!-- END: Top Bar -->
+        <div class="flex overflow-hidden">
+            <!-- BEGIN: Side Menu -->
+            <nav class="side-nav">
+                <ul>
+                    <li>
+                        <a href="/dashboard" class="side-menu <%- (active == 'dashboard') ? 'side-menu--active' : '' -%>">
+                            <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
+                            <div class="side-menu__title">
+                                Dashboard 
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/contactus" class="side-menu <%- (active == 'contactus') ? 'side-menu--active' : '' -%>">
+                            <div class="side-menu__icon"> <i  data-lucide="phone-call"></i> </div>
+                            <div class="side-menu__title">
+                                Contact Us 
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/quote" class="side-menu <%- (active == 'quote') ? 'side-menu--active' : '' -%>">
+                            <div class="side-menu__icon"> <i data-lucide="message-circle"></i> </div>
+                            <div class="side-menu__title">
+                                Quotes
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/service" class="side-menu <%- (active == 'service') ? 'side-menu--active' : '' -%>">
+                            <div class="side-menu__icon"> <i data-lucide="list" ></i> </div>
+                            <div class="side-menu__title">
+                                Services
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- END: Side Menu -->

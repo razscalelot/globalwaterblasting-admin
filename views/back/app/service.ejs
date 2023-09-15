@@ -1,0 +1,97 @@
+ <!-- BEGIN: Content -->
+ <div class="content">
+    <h2 class="intro-y text-lg font-medium mt-10">
+        Service List
+    </h2>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+            <a href="/create" class="btn btn-primary shadow-md mr-2">Add New Service</a>
+            <div class="hidden md:block mx-auto text-slate-500">Showing <%= serviceData.page  %> to <%= serviceData.limit  %> of <%= serviceData.totalDocs  %> entries</div>
+            <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+                <div class="w-56 relative text-slate-500">
+                    <form action="?search" method="get">
+                        <input type="text" name="search" class="form-control w-56 box pr-10" placeholder="Search...">
+                        <button type="submit" class="flex items-center">
+                            <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-6" data-lucide="search"></i> 
+                        </button>
+                        <button type="submit" class="flex items-center">
+                            <input type="hidden" name="" class="form-control w-56 box pr-10" placeholder="Search...">
+                            <i data-lucide="x" class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"></i> 
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- BEGIN: Data List -->
+        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+            <table class="table table-report -mt-2">
+                <thead>
+                    <tr>
+                        <th class="whitespace-nowrap">Name</th>
+                        <th class="whitespace-nowrap">Email</th>
+                        <th class="whitespace-nowrap">Phone Number</th>
+                        <th class="whitespace-nowrap">Services</th>
+                        <th class="whitespace-nowrap">Address</th>
+                        <th class="whitespace-nowrap">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% serviceData.docs.forEach((service)=> { %>
+                    <tr class="intro-x">
+                        <td> <%= service.name %> </td>
+                        <td> <%= service.email %> </td>
+                        <td><%= service.mobile %></td>
+                        <td><%= service.selected_service %></td>
+                        <td> <%= service.address %>  <%= service.postcode %> </td>
+                        <td> <%= service.createdAt.toDateString()   %> </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: Data List -->
+        <!-- BEGIN: Pagination -->
+        <% if (serviceData.docs.length > 0) { %>
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center justify-center">
+            <nav class="w-full sm:w-auto">
+                <ul class="pagination">
+                    <% if (serviceData.page == 1) { %>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
+                        </li>
+                    <% } else {%>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
+                        </li>
+                    <% } %>
+                    <% var i = (Number(serviceData.page) > 2 ? Number(serviceData.page) - 2 : 1) %>
+                    <% if (i !== 1) {%>
+                        <li class="page-item"> <a class="page-link" href="javascript:void(0);">...</a> </li>
+                    <% } %>
+                    <% for (; i <= (Number(serviceData.page) + 2) && i <= serviceData.totalPages; i++ ) { %>
+                        <% if (i == serviceData.page) { %>
+                            <li class="page-item disabled active"> <a class="page-link" href="javascript:void(0);"><%= i %></a> </li>
+                        <% }else{ %>
+                            <li class="page-item"> <a class="page-link" href="?page=<%= i %>"><%= i %></a> </li>
+                        <% } %>
+                        <% if (i == Number(serviceData.page) + 2 && i < serviceData.totalPages) {%>
+                            <li class="page-item"> <a class="page-link" href="javascript:void(0);">...</a> </li>
+                        <% } %>
+                    <% } %>
+                    <% if (serviceData.page == serviceData.totalPages) { %>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
+                        </li>
+                    <% } else {%>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= serviceData.totalPages %>"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        </div>
+        <% } %>
+        <!-- END: Pagination -->
+    </div>
+</div>
+<!-- END: Content -->

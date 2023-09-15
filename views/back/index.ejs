@@ -1,0 +1,91 @@
+<!-- BEGIN: Content -->
+<div class="content">
+  <div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 2xl:col-span-12">
+      <div class="grid grid-cols-12 gap-6">
+        <!-- BEGIN: General Report -->
+        <div class="col-span-12 mt-8">
+          <div class="intro-y flex items-center h-10">
+            <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
+          </div>
+          <div class="grid grid-cols-12 gap-6 mt-5">
+            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                <a href="/service">
+                  <div class="report-box zoom-in">
+                    <div class="box p-5">
+                      <div class="flex">
+                        <i
+                          data-lucide="list"
+                          class="report-box__icon text-primary"
+                        ></i>
+                        <div class="ml-auto"></div>
+                      </div>
+                      <div class="text-3xl font-medium leading-8 mt-6">0</div>
+                      <div class="text-base text-slate-500 mt-1">Services</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+              <div class="report-box zoom-in">
+                <div class="box p-5">
+                  <div class="flex">
+                    <i
+                      data-lucide="percent"
+                      class="report-box__icon text-pending"
+                    ></i>
+                    <div class="ml-auto"></div>
+                  </div>
+                  <div class="text-3xl font-medium leading-8 mt-6">
+                    <%= offerCount %>
+                  </div>
+                  <div class="text-base text-slate-500 mt-1">Offers</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+              <a href="/quote">
+                <div class="report-box zoom-in">
+                  <div class="box p-5">
+                    <div class="flex">
+                      <i
+                        data-lucide="message-circle"
+                        class="report-box__icon text-warning"
+                      ></i>
+                      <div class="ml-auto"></div>
+                    </div>
+                    <div class="text-3xl font-medium leading-8 mt-6">
+                      <%= quoteCount %>
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">Quotes</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+              <a href="/contactus">
+                <div class="report-box zoom-in">
+                  <div class="box p-5">
+                    <div class="flex">
+                      <i
+                        data-lucide="phone-call"
+                        class="report-box__icon text-success"
+                      ></i>
+                      <div class="ml-auto"></div>
+                    </div>
+                    <div class="text-3xl font-medium leading-8 mt-6">
+                      <%= contactusCount %>
+                    </div>
+                    <div class="text-base text-slate-500 mt-1">Contact Us</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- END: General Report -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: Content -->
