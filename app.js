@@ -11,6 +11,7 @@ var multer = require('multer');
 var fs = require('fs');
 let mongoose = require("mongoose");
 var expressLayouts = require('express-ejs-layouts');
+
 // const adminpaths = [
 //   { pathUrl: '/', routeFile: 'login'},
 //   { pathUrl: '/dashboard', routeFile: 'dashboard'},
@@ -23,6 +24,8 @@ const backpaths = [
   {pathUrl: "/quote", routeFile: 'quote'},
   {pathUrl: "/service", routeFile: 'service'},
   {pathUrl: "/create", routeFile: 'create'},
+  {pathUrl: "/edit", routeFile: 'edit'},
+  {pathUrl: "/remove", routeFile: 'remove'},
 ]
 var app = express();
 const oneDay = 1000 * 60 * 60 * 24;

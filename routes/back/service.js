@@ -10,12 +10,7 @@ router.get('/', async (req, res) => {
     let primary = mongoConnection.useDb(constants.DEFAULT_DB);
     await primary.model(constants.MODELS.services, serviceModel).paginate({
         $or: [
-            { name: { '$regex': new RegExp(search, "i") } },
-            { email: { '$regex': new RegExp(search, "i") } },
-            { mobile: { '$regex': new RegExp(search, "i") } },
-            { address: { '$regex': new RegExp(search, "i") } },
-            { selected_service: { '$regex': new RegExp(search, "i") } },
-            { address: { '$regex': new RegExp(search, "i") } },
+            { servicename: { '$regex': new RegExp(search, "i") } }
         ]
     }, {
         page,

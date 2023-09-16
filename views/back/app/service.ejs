@@ -27,23 +27,28 @@
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>
+                        <th class="whitespace-nowrap">Image</th>
                         <th class="whitespace-nowrap">Name</th>
-                        <th class="whitespace-nowrap">Email</th>
-                        <th class="whitespace-nowrap">Phone Number</th>
-                        <th class="whitespace-nowrap">Services</th>
-                        <th class="whitespace-nowrap">Address</th>
-                        <th class="whitespace-nowrap">Date</th>
+                        <th class="whitespace-nowrap">Description</th>
+                        <th class="text-center whitespace-nowrap">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% serviceData.docs.forEach((service)=> { %>
                     <tr class="intro-x">
-                        <td> <%= service.name %> </td>
-                        <td> <%= service.email %> </td>
-                        <td><%= service.mobile %></td>
-                        <td><%= service.selected_service %></td>
-                        <td> <%= service.address %>  <%= service.postcode %> </td>
-                        <td> <%= service.createdAt.toDateString()   %> </td>
+                        <td> 
+                            <div class="w-10 h-10 image-fit zoom-in -ml-5">
+                                <img alt="<%= service.servicename %>" class="rounded-full" src="/uploads/<%= service.image %>">
+                            </div> 
+                        </td>
+                        <td> <%= service.servicename %> </td>
+                        <td><%= service.shortdesc %></td>
+                        <td class="table-report__action w-56">
+                            <div class="flex justify-center items-center">
+                                <a class="flex items-center mr-3" href="/edit?id=<%= service._id  %>"> <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                <a class="flex items-center text-danger" href="/remove?id=<%= service._id  %>" data-tw-toggle="modal" data-tw-target="#delete-confirmation-modal"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                            </div>
+                        </td>
                     </tr>
                     <% }) %>
                 </tbody>
