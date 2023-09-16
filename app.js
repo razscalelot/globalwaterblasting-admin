@@ -18,6 +18,7 @@ var expressLayouts = require('express-ejs-layouts');
 // ];
 const backpaths = [
   {pathUrl: "/", routeFile: 'login'},
+  {pathUrl: "/logout", routeFile: 'logout'},
   {pathUrl: "/dashboard", routeFile: 'dashboard'},
   {pathUrl: "/contactus", routeFile: 'contactus'},
   {pathUrl: "/quote", routeFile: 'quote'},

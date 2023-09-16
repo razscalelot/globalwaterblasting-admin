@@ -4,7 +4,8 @@ let constants = {
         contactus: 'contactus',
         quotes: 'quotes',
         offers: 'offers',
-        services: 'services'
+        services: 'services',
+        users: 'users'
     }
 };
 module.exports = constants;
