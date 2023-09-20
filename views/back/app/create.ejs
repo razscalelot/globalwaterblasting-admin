@@ -1,362 +1,348 @@
 <!-- BEGIN: Content -->
 <div class="content">
+    <% if (message.length > 0) {%>
+        <div class="intro-y col-span-11 alert alert-primary alert-dismissible show flex items-center mt-6"
+            role="alert">
+            <span><i data-lucide="info" class="w-4 h-4 mr-2"></i></span>
+            <span>
+                <%= message %>
+            </span>
+            <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+        <% } %>
     <div class="intro-y flex items-center mt-8">
         <h2 class="text-lg font-medium mr-auto">
             Add Service
         </h2>
     </div>
     <div class="grid grid-cols-11 gap-x-6 mt-5 pb-20">
+        <!-- BEGIN: Notification -->         
         <!-- BEGIN: Notification -->
-        <% if (typeof message !='undefined' ) { %>
-            <% if (IsSuccess==false) {%>
-                <div class="intro-y col-span-11 alert alert-primary alert-dismissible show flex items-center mb-6"
-                    role="alert">
-                    <span><i data-lucide="info" class="w-4 h-4 mr-2"></i></span>
-                    <span>
-                        <%= message %>
-                    </span>
-                    <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-                <% } else { %>
-                    <div class="intro-y col-span-11 alert alert-primary alert-dismissible show flex items-center mb-6"
-                        role="alert">
-                        <span><i data-lucide="info" class="w-4 h-4 mr-2"></i></span>
-                        <span>
-                            <%= message %>
-                        </span>
-                        <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <% } %>
-                        <% } %>
-
-                            <!-- BEGIN: Notification -->
-                            <div class="intro-y col-span-11 2xl:col-span-12">
-                                <form action="/create" method="post" enctype="multipart/form-data">
-                                    <!-- BEGIN: Product Information -->
-                                    <div class="intro-y box p-5 mt-5">
-                                        <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+        <div class="intro-y col-span-11 2xl:col-span-12">
+            <form action="/create" method="post" enctype="multipart/form-data">
+                <!-- BEGIN: Product Information -->
+                <div class="intro-y box p-5 mt-5">
+                    <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div
+                            class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                            Service Name
+                        </div>
+                        <div class="mt-5">
+                            <div
+                                class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div class="form-label xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Service Name</div>
                                             <div
-                                                class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                                Service Name
-                                            </div>
-                                            <div class="mt-5">
-                                                <div
-                                                    class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                    <div class="form-label xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Service Name</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1">
-                                                        <input name="servicename" id="product-name" type="text"
-                                                            class="form-control" placeholder="Service name">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
                                         </div>
                                     </div>
-                                    <!-- END: Product Information -->
-                                    <!-- BEGIN: Uplaod Product -->
-                                    <div class="intro-y box p-5 mt-5">
-                                        <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                            <div
-                                                class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                                Upload Service Image
-                                            </div>
-                                            <div class="mt-5">
-                                                <div class="form-inline items-start flex-col xl:flex-row mt-10">
-                                                    <div class="form-label w-full xl:w-64 xl:!mx-5">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Service Photos</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
-                                                        <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
-                                                            <div class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                                <img class="rounded-md" alt="Service Photos" id="image">
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="px-4 pb-4 flex items-center justify-center cursor-pointer relative">
-                                                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
-                                                                class="text-primary mr-1">Upload a file</span>
-                                                            <input id="horizontal-form-1" type="file" name="image"
-                                                                onchange="previewImage(event, 'image')"
-                                                                class="w-full h-full top-0 left-0 absolute opacity-0">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-label w-full xl:w-64 xl:!mx-5">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Service Banner</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
-                                                        <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
-                                                            <div
-                                                                class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                                <img class="rounded-md" alt="Service Banner" id="banner">
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
-                                                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
-                                                                class="text-primary mr-1">Upload a file</span>
-                                                            <input id="horizontal-form-1" type="file"
-                                                                onchange="previewImage(event, 'banner')" name="banner"
-                                                                class="w-full h-full top-0 left-0 absolute opacity-0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END: Uplaod Product -->
-                                    <!-- BEGIN: Product Detail -->
-                                    <div class="intro-y box p-5 mt-5">
-                                        <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                            <div
-                                                class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                                Service Detail </div>
-                                            <div class="mt-5">
-                                                <div
-                                                    class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                    <div class="form-label xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Service Short Description</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <textarea id="validation-form-6" class="form-control"
-                                                        name="shortdesc" placeholder="Type your Short Description"></textarea>
-                                                </div>
-                                                <div
-                                                    class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                    <div class="form-label xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Service Long Description</div>
-                                                                <div class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1">
-                                                        <textarea id="validation-form-6" class="form-control"
-                                                        name="longdesc" placeholder="Type your Short Description"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END: Product Detail -->
-                                    <!-- BEGIN: Uplaod Product -->
-                                    <div class="intro-y box p-5 mt-5">
-                                        <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                            <div
-                                                class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                                Upload Before & After Service Image
-                                            </div>
-                                            <div class="mt-5">
-                                                <div class="form-inline items-start flex-col xl:flex-row mt-10">
-                                                    <div class="form-label w-full xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Before Service Photos</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
-                                                        <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
-                                                            <div
-                                                                class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                                <img class="rounded-md" alt="Before Service Photos" id="before">
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
-                                                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
-                                                                class="text-primary mr-1">Upload a file</span>
-                                                            <input id="horizontal-form-1" type="file"
-                                                                onchange="previewImage(event, 'before')" name="before"
-                                                                class="w-full h-full top-0 left-0 absolute opacity-0">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-label w-full xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">After Service Photo</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
-                                                        <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
-                                                            <div
-                                                                class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                                <img class="rounded-md" alt="After Service Photos" id="after">
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
-                                                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
-                                                                class="text-primary mr-1">Upload a file</span>
-                                                            <input id="horizontal-form-1" type="file"
-                                                                onchange="previewImage(event, 'after')" name="after"
-                                                                class="w-full h-full top-0 left-0 absolute opacity-0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END: Uplaod Product -->
-                                    <!-- BEGIN: Product Variant -->
-                                    <div class="intro-y box p-5 mt-5">
-                                        <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                                            <div
-                                                class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
-                                                <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Service
-                                                Information
-                                            </div>
-                                            <div class="mt-5">
-                                                <div
-                                                    class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                    <div class="form-label xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Title</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1">
-                                                        <input name="title" id="product-name" type="text"
-                                                            class="form-control" placeholder="Enter Here...">
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
-                                                    <div class="form-label xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Title Description</div>
-                                                                <div
-                                                                    class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
-                                                                    Required</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <textarea id="validation-form-6" class="form-control"
-                                                        name="longdesc1" placeholder="Type your description"></textarea>
-                                                </div>
-                                                <div
-                                                    class="form-inline items-start flex-col xl:flex-row mt-2 pt-2 first:mt-0 first:pt-0">
-                                                    <div class="form-label xl:w-64 xl:!mr-10">
-                                                        <div class="text-left">
-                                                            <div class="flex items-center">
-                                                                <div class="font-medium">Service Points</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-full mt-3 xl:mt-0 flex-1">
-                                                        <div
-                                                            class="relative pl-5 pr-5 xl:pr-10 py-10 bg-slate-50 dark:bg-transparent dark:border rounded-md">
-                                                            <a href=""
-                                                                class="text-slate-500 absolute top-0 right-0 mr-4 mt-4">
-                                                                <i data-lucide="x" class="w-5 h-5"></i> </a>
-                                                            <div>
-                                                                <div class="input_field_wrapper">
-                                                                    <div>
-                                                                        <div class="form-inline mt-5 first:mt-0">
-                                                                            <label
-                                                                                class="form-label sm:w-20">Title</label>
-                                                                            <div
-                                                                                class="flex items-center flex-1 xl:pr-20">
-                                                                                <div class="input-group flex-1">
-                                                                                    <input name="ptitle" type="text"
-                                                                                        class="form-control"
-                                                                                        placeholder="Enter Here...">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="form-inline mt-5 items-start first:mt-0">
-                                                                            <label
-                                                                                class="form-label mt-2 sm:w-20">Description</label>
-                                                                            <div class="flex-1">
-                                                                                <div
-                                                                                    class="xl:flex items-center mt-5 first:mt-0">
-                                                                                    <div class="input-group flex-1">
-                                                                                        <textarea id="validation-form-6"
-                                                                                            class="form-control"
-                                                                                            name="desc"
-                                                                                            placeholder="Type your description"></textarea>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="w-20 flex text-slate-500 mt-3 xl:mt-0">
-                                                                                        <a href="javascript:void(0);"
-                                                                                            class="ml-3 xl:ml-5"> </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="xl:ml-20 xl:pl-5 xl:pr-20 mt-5 first:mt-0">
-                                                                    <button type="button" class="btn btn-outline-primary border-dashed w-full add_button">
-                                                                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
-                                                                        Add New Point
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END: Product Variant -->
-                                    <div class="flex justify-end flex-col md:flex-row gap-2 mt-5">
-                                        <button type="reset"
-                                            class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Cancel</button>
-                                        <button type="submit"
-                                            class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Save
-                                            & Add
-                                            New Service</button>
-                                        <button type="submit" class="btn py-3 btn-primary w-full md:w-52">Save</button>
-                                    </div>
-                                </form>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1">
+                                    <input name="servicename" id="product-name" type="text"
+                                        class="form-control" placeholder="Service name">
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Product Information -->
+                <!-- BEGIN: Uplaod Product -->
+                <div class="intro-y box p-5 mt-5">
+                    <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div
+                            class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                            Upload Service Image
+                        </div>
+                        <div class="mt-5">
+                            <div class="form-inline items-start flex-col xl:flex-row mt-10">
+                                <div class="form-label w-full xl:w-64 xl:!mx-5">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Service Photos</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                    <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                        <div class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                            <img class="rounded-md" alt="Service Photos" id="image">
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="px-4 pb-4 flex items-center justify-center cursor-pointer relative">
+                                        <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                            class="text-primary mr-1">Upload a file</span>
+                                        <input id="horizontal-form-1" type="file" name="image"
+                                            onchange="previewImage(event, 'image')"
+                                            class="w-full h-full top-0 left-0 absolute opacity-0">
+                                    </div>
+                                </div>
+                                <div class="form-label w-full xl:w-64 xl:!mx-5">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Service Banner</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                    <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                        <div
+                                            class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                            <img class="rounded-md" alt="Service Banner" id="banner">
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
+                                        <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                            class="text-primary mr-1">Upload a file</span>
+                                        <input id="horizontal-form-1" type="file"
+                                            onchange="previewImage(event, 'banner')" name="banner"
+                                            class="w-full h-full top-0 left-0 absolute opacity-0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Uplaod Product -->
+                <!-- BEGIN: Product Detail -->
+                <div class="intro-y box p-5 mt-5">
+                    <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div
+                            class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                            Service Detail </div>
+                        <div class="mt-5">
+                            <div
+                                class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div class="form-label xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Service Short Description</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <textarea id="validation-form-6" class="form-control"
+                                    name="shortdesc" placeholder="Type your Short Description"></textarea>
+                            </div>
+                            <div
+                                class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div class="form-label xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Service Long Description</div>
+                                            <div class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1">
+                                    <textarea id="validation-form-6" class="form-control"
+                                    name="longdesc" placeholder="Type your Short Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Product Detail -->
+                <!-- BEGIN: Uplaod Product -->
+                <div class="intro-y box p-5 mt-5">
+                    <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div
+                            class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                            Upload Before & After Service Image
+                        </div>
+                        <div class="mt-5">
+                            <div class="form-inline items-start flex-col xl:flex-row mt-10">
+                                <div class="form-label w-full xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Before Service Photos</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                    <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                        <div
+                                            class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                            <img class="rounded-md" alt="Before Service Photos" id="before">
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
+                                        <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                            class="text-primary mr-1">Upload a file</span>
+                                        <input id="horizontal-form-1" type="file"
+                                            onchange="previewImage(event, 'before')" name="before"
+                                            class="w-full h-full top-0 left-0 absolute opacity-0">
+                                    </div>
+                                </div>
+                                <div class="form-label w-full xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">After Service Photo</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                    <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                        <div
+                                            class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                            <img class="rounded-md" alt="After Service Photos" id="after">
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
+                                        <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                            class="text-primary mr-1">Upload a file</span>
+                                        <input id="horizontal-form-1" type="file"
+                                            onchange="previewImage(event, 'after')" name="after"
+                                            class="w-full h-full top-0 left-0 absolute opacity-0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Uplaod Product -->
+                <!-- BEGIN: Product Variant -->
+                <div class="intro-y box p-5 mt-5">
+                    <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                        <div
+                            class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                            <i data-lucide="chevron-down" class="w-4 h-4 mr-2"></i> Service
+                            Information
+                        </div>
+                        <div class="mt-5">
+                            <div
+                                class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div class="form-label xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Title</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1">
+                                    <input name="title" id="product-name" type="text"
+                                        class="form-control" placeholder="Enter Here...">
+                                </div>
+                            </div>
+                            <div
+                                class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                <div class="form-label xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Title Description</div>
+                                            <div
+                                                class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <textarea id="validation-form-6" class="form-control"
+                                    name="longdesc1" placeholder="Type your description"></textarea>
+                            </div>
+                            <div
+                                class="form-inline items-start flex-col xl:flex-row mt-2 pt-2 first:mt-0 first:pt-0">
+                                <div class="form-label xl:w-64 xl:!mr-10">
+                                    <div class="text-left">
+                                        <div class="flex items-center">
+                                            <div class="font-medium">Service Points</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full mt-3 xl:mt-0 flex-1">
+                                    <div
+                                        class="relative pl-5 pr-5 xl:pr-10 py-10 bg-slate-50 dark:bg-transparent dark:border rounded-md">
+                                        <a href=""
+                                            class="text-slate-500 absolute top-0 right-0 mr-4 mt-4">
+                                            <i data-lucide="x" class="w-5 h-5"></i> </a>
+                                        <div>
+                                            <div class="input_field_wrapper">
+                                                <div>
+                                                    <div class="form-inline mt-5 first:mt-0">
+                                                        <label
+                                                            class="form-label sm:w-20">Title</label>
+                                                        <div
+                                                            class="flex items-center flex-1 xl:pr-20">
+                                                            <div class="input-group flex-1">
+                                                                <input name="ptitle" type="text"
+                                                                    class="form-control"
+                                                                    placeholder="Enter Here...">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="form-inline mt-5 items-start first:mt-0">
+                                                        <label
+                                                            class="form-label mt-2 sm:w-20">Description</label>
+                                                        <div class="flex-1">
+                                                            <div
+                                                                class="xl:flex items-center mt-5 first:mt-0">
+                                                                <div class="input-group flex-1">
+                                                                    <textarea id="validation-form-6"
+                                                                        class="form-control"
+                                                                        name="desc"
+                                                                        placeholder="Type your description"></textarea>
+                                                                </div>
+                                                                <div
+                                                                    class="w-20 flex text-slate-500 mt-3 xl:mt-0">
+                                                                    <a href="javascript:void(0);"
+                                                                        class="ml-3 xl:ml-5"> </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="xl:ml-20 xl:pl-5 xl:pr-20 mt-5 first:mt-0">
+                                                <button type="button" class="btn btn-outline-primary border-dashed w-full add_button">
+                                                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                                    Add New Point
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Product Variant -->
+                <div class="flex justify-end flex-col md:flex-row gap-2 mt-5">
+                    <button type="reset"
+                        class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Cancel</button>
+                    <button type="submit"
+                        class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Save
+                        & Add
+                        New Service</button>
+                    <button type="submit" class="btn py-3 btn-primary w-full md:w-52">Save</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <!-- END: Content -->
@@ -416,6 +402,16 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 image.src = e.target.result;
+                const response = fetch('/create/image', {
+                    method: 'POST',
+                    body: {image: input.files[0]}, // string or object
+                    headers: {
+                    'Content-Type': 'application/json'
+                    }
+                });
+                console.log('response', response);
+                const myJson = response.json(); //extract JSON from the http response
+                // do something with myJson
             }
             reader.readAsDataURL(input.files[0]);
         }

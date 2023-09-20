@@ -11,6 +11,7 @@ var multer = require('multer');
 var fs = require('fs');
 let mongoose = require("mongoose");
 var expressLayouts = require('express-ejs-layouts');
+var flush = require('connect-flash');
 
 // const adminpaths = [
 //   { pathUrl: '/', routeFile: 'login'},
@@ -39,6 +40,12 @@ app.use(
         saveUninitialized: true
     })
 );
+// app.use((res, req, next) =>{
+//     res.locals.message == req.session.message;
+//     delete req.session.message;
+//     next();
+// })
+app.use(flush());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);

@@ -19,105 +19,76 @@ var storage = multer.diskStorage({
 var upload = multer({ storage })
 
 router.get('/', async (req, res) => {
-    console.log("req.query", req.query);
-    const { id } = req.query;
-    if (id && id != '' && mongoose.Types.ObjectId.isValid(id)) {
-        let primary = mongoConnection.useDb(constants.DEFAULT_DB);
-        let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(id).lean();
-        if (serviceData && serviceData != null) {
-            console.log("serviceData", serviceData);
-            res.render('back/app/edit', { title: 'Update Service || Global Water Blasting', active: 'service', serviceData: serviceData });
+    const token = req.cookies.token;
+    if (token) {
+        const { id } = req.query;
+        if (id && id != '' && mongoose.Types.ObjectId.isValid(id)) {
+            let primary = mongoConnection.useDb(constants.DEFAULT_DB);
+            let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(id).lean();
+            if (serviceData && serviceData != null) {
+                res.render('back/app/edit', { title: 'Update Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message') });
+            } else {
+                res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', message: req.flash('message') });
+            }
         } else {
-            res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service' });
+            req.flash('message', 'Invalid service id to update service, please try again');
+            res.redirect('/edit');
         }
+    } else {
+        res.redirect('/');
     }
 });
 
 router.post('/', upload.fields([{ name: 'image' }, { name: 'banner' }, { name: 'before' }, { name: 'after' }]), async (req, res) => {
-    let { serviceid, servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
-    console.log('req.body', req.body);
-    console.log('req.file', req.files);
-    console.log('req.image', req.body.image);
-    if (serviceid && serviceid != '' && mongoose.Types.ObjectId.isValid(serviceid)) {
-        let primary = mongoConnection.useDb(constants.DEFAULT_DB);
-        let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
-        if (serviceData && serviceData != null) {
-            let points = [];
-            for (var i = 0; i < ptitle.length; i++) {
-                let obj = {
-                    title: ptitle[i],
-                    decs: desc[i]
-                };
-                points.push(obj);
-            }
-            let obj = {
-                servicename: servicename,
-                image: (req.files['image'] == null) ? image : req.files['image'][0].filename,
-                banner: (req.files['banner'] == null) ? banner : req.files['banner'][0].filename,
-                shortdesc: shortdesc,
-                longdesc: longdesc,
-                images: {
-                    before: (req.files['before'] == null) ? before : req.files['before'][0].filename,
-                    after: (req.files['after'] == null) ? after : req.files['after'][0].filename,
-                },
-                servicedetails: {
-                    title: title,
-                    longdesc: longdesc1,
-                    points: points
+    const token = req.cookies.token;
+    if (token) {
+        let { serviceid, servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
+        if (serviceid && serviceid != '' && mongoose.Types.ObjectId.isValid(serviceid)) {
+            let primary = mongoConnection.useDb(constants.DEFAULT_DB);
+            let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
+            if (serviceData && serviceData != null) {
+                let points = [];
+                for (var i = 0; i < ptitle.length; i++) {
+                    let obj = {
+                        title: ptitle[i],
+                        decs: desc[i]
+                    };
+                    points.push(obj);
                 }
-            }
-            console.log("obj", obj);
-            let insertedData = await primary.model(constants.MODELS.services, serviceModel).findByIdAndUpdate(serviceid, obj);
-            if (insertedData && insertedData != null) {
-                const { page = 1, limit = 10, search } = req.query;
-                await primary.model(constants.MODELS.services, serviceModel).paginate({
-                    $or: [
-                        { name: { '$regex': new RegExp(search, "i") } },
-                        { email: { '$regex': new RegExp(search, "i") } },
-                        { mobile: { '$regex': new RegExp(search, "i") } },
-                        { address: { '$regex': new RegExp(search, "i") } },
-                        { selected_service: { '$regex': new RegExp(search, "i") } },
-                        { address: { '$regex': new RegExp(search, "i") } },
-                    ]
-                }, {
-                    page,
-                    limit: parseInt(limit),
-                    sort: { _id: -1 },
-                    lean: true
-                }).then((serviceData) => {
-                    res.render('back/app/service', { title: 'Service || Global Water Blasting', IsSuccess: true, message: 'Service created successfully!', active: 'service', serviceData: serviceData });
-                }).catch((error) => {
-                    res.render('back/app/service', { title: 'Service || Global Water Blasting', IsSuccess: false, message: 'Something want wrong!', active: 'service', serviceData: serviceData });
-                })
+                let obj = {
+                    servicename: servicename,
+                    image: (req.files['image'] == null) ? image : req.files['image'][0].filename,
+                    banner: (req.files['banner'] == null) ? banner : req.files['banner'][0].filename,
+                    shortdesc: shortdesc,
+                    longdesc: longdesc,
+                    images: {
+                        before: (req.files['before'] == null) ? before : req.files['before'][0].filename,
+                        after: (req.files['after'] == null) ? after : req.files['after'][0].filename,
+                    },
+                    servicedetails: {
+                        title: title,
+                        longdesc: longdesc1,
+                        points: points
+                    }
+                }
+                let insertedData = await primary.model(constants.MODELS.services, serviceModel).findByIdAndUpdate(serviceid, obj);
+                if (insertedData && insertedData != null) {
+                    req.flash('message', 'Service updated successfully!');
+                    res.redirect('/service');
+                } else {
+                    req.flash('message', 'Something went wrong, Please try again');
+                    res.redirect('/service');
+                }
             } else {
-                res.render('back/app/create', {
-                    title: 'Service || Global Water Blasting',
-                    message: 'Something went wrong, Please try again',
-                    Data: 0,
-                    Status: 400,
-                    IsSuccess: false,
-                    active: 'service'
-                });
+                req.flash('message', 'Invalid service id to update service, please try again');
+                res.redirect('/service');
             }
         } else {
-            res.render('back/app/service', {
-                title: 'Service || Global Water Blasting',
-                message: ' The request message was already sent. We will contact you very soon!',
-                Data: 0,
-                Status: 400,
-                IsSuccess: false,
-                active: 'service'
-            });
+            req.flash('message', 'Invalid service id to update service, please try again');
+            res.redirect('/service');
         }
     } else {
-        res.render('back/app/service', {
-            title: 'Service || Global Water Blasting',
-            message: 'Invalid service id to update service data, please try again',
-            Data: 0,
-            Status: 400,
-            IsSuccess: false,
-            active: 'service'
-        });
+        res.redirect('/');
     }
 });
 
