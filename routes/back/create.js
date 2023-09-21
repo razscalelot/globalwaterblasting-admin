@@ -45,9 +45,7 @@ router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) 
                         };
                         return responseManager.onSuccess('File uploaded successfully!', obj, res);
                     }).catch((error) => {
-                        // return responseManager.onError(error, res);
-                        req.flash('message', error);
-                        res.redirect('/service');
+                        return responseManager.onError(error, res);
                     });
                 } else {
                     req.flash('message', 'Image file must be <= 3 MB, please try again');
