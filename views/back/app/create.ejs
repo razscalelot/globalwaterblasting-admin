@@ -404,6 +404,7 @@
                 image.src = e.target.result;
             }
             reader.readAsDataURL(input.files[0]);
+            return function() {
             $.ajax({
                 type: "POST",
                 url: "/create/image",
@@ -417,6 +418,7 @@
                     console.log(error.responseJSON.Message);
                 }
             });
+        }
         }
     }
 </script>
