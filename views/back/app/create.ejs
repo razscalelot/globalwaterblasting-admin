@@ -404,21 +404,10 @@
                 image.src = e.target.result;
             }
             reader.readAsDataURL(input.files[0]);
-            return function() {
-            $.ajax({
-                type: "POST",
-                url: "/create/image",
-                data: { image: input.files[0] },
-                dataType: "json",
-                success: function (response) {
-                    console.log("response". response.Message);
-                    console.log("Data". Data);
-                },
-                error: function (error) {
-                    console.log(error.responseJSON.Message);
-                }
+            $.post('/create/image', { image: input.files[0] }, function(response) { 
+                console.log("response". response.Message);
+                console.log("Data". response.Data);
             });
-        }
         }
     }
 </script>
