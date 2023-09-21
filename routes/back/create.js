@@ -31,27 +31,23 @@ const slugify = str =>
 
 
 router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
-    console.log("call");
-    console.log("req.file", req.file);
-    // const token = req.cookies.token;
-    // if (token) {
+    const token = req.cookies.token;
+    if (token) {
         if (req.file) {
             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
                 if (filesizeinMb <= 3) {
-                    console.log("req.file.buffer", req.file.buffer);
-                    console.log("req.file", req.file);
                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
                         console.log('result', result);
                         let obj = {
                             s3_url: process.env.AWS_BUCKET_URI,
                             url: result.data.Key
                         };
-                        return responseManager.onSuccess('File uploaded successfully!', obj, res);
+                        return obj;
                     }).catch((error) => {
-                        return responseManager.onError(error, res);
-                        // req.flash('message', error);
-                        // res.redirect('/service');
+                        // return responseManager.onError(error, res);
+                        req.flash('message', error);
+                        res.redirect('/service');
                     });
                 } else {
                     req.flash('message', 'Image file must be <= 3 MB, please try again');
@@ -65,9 +61,9 @@ router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) 
             req.flash('message', 'Invalid file to upload, please try again');
             res.redirect('/service');
         }
-    // } else {
-    //     res.redirect('/');
-    // }
+    } else {
+        res.redirect('/');
+    }
 });
 
 
