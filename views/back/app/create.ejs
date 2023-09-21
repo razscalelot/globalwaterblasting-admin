@@ -402,21 +402,21 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 image.src = e.target.result;
-                $.ajax({
-                    type: "POST",
-                    url: "/create/image",
-                    data: { image: input.files[0] },
-                    dataType: "json",
-                    success: function (response) {
-                        console.log("response". response.Message);
-                        console.log("Data". Data);
-                    },
-                    error: function (error) {
-                        console.log(error.responseJSON.Message);
-                    }
-                });
             }
             reader.readAsDataURL(input.files[0]);
+            $.ajax({
+                type: "POST",
+                url: "/create/image",
+                data: { image: input.files[0] },
+                dataType: "json",
+                success: function (response) {
+                    console.log("response". response.Message);
+                    console.log("Data". Data);
+                },
+                error: function (error) {
+                    console.log(error.responseJSON.Message);
+                }
+            });
         }
     }
 </script>
