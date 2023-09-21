@@ -43,7 +43,7 @@ router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) 
                             s3_url: process.env.AWS_BUCKET_URI,
                             url: result.data.Key
                         };
-                        return obj;
+                        return {obj, res};
                     }).catch((error) => {
                         // return responseManager.onError(error, res);
                         req.flash('message', error);
