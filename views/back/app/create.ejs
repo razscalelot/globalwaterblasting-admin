@@ -18,6 +18,7 @@
             </div>
             <div class="grid grid-cols-11 gap-x-6 mt-5 pb-20">
                 <!-- BEGIN: Notification -->
+
                 <!-- BEGIN: Notification -->
                 <div class="intro-y col-span-11 2xl:col-span-12">
                     <form action="/create" method="post" enctype="multipart/form-data">
@@ -404,10 +405,6 @@
                 image.src = e.target.result;
             }
             reader.readAsDataURL(input.files[0]);
-            $.post('/create/image', { image: input.files[0] }, function(response) { 
-                console.log("response". response.Message);
-                console.log("Data". response.Data);
-            });
         }
     }
 </script>

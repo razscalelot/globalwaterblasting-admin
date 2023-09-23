@@ -5,21 +5,23 @@ const constants = require('../../utilities/constants');
 const serviceModel = require('../../models/services.model');
 const allowedContentTypes = require("../../utilities/content-types");
 let path = require('path');
-const multer = require('multer');
+// const multer = require('multer');
 const AwsCloud = require('../../utilities/aws');
 let fileHelper = require('../../utilities/multer.functions');
 const responseManager = require('../../utilities/response.manager');
+const multer = require('multer');
+const upload = multer();
 
-var storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, 'public/uploads')
-    },
-    filename: (req, file, callback) => {
-        callback(null, Date.now() + path.extname(file.originalname));
-    }
-});
+// var storage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, 'public/uploads')
+//     },
+//     filename: (req, file, callback) => {
+//         callback(null, Date.now() + path.extname(file.originalname));
+//     }
+// });
 
-var upload = multer({ storage })
+// var upload = multer({ storage })
 
 const slugify = str =>
     str
@@ -30,39 +32,67 @@ const slugify = str =>
         .replace(/^-+|-+$/g, '');
 
 
-router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
-    const token = req.cookies.token;
-    if (token) {
-        if (req.file) {
-            if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
-                let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
-                if (filesizeinMb <= 3) {
-                    AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
-                        console.log('result', result);
-                        let obj = {
-                            s3_url: process.env.AWS_BUCKET_URI,
-                            url: result.data.Key
-                        };
-                        return responseManager.onSuccess('File uploaded successfully!', obj, res);
-                    }).catch((error) => {
-                        return responseManager.onError(error, res);
-                    });
-                } else {
-                    req.flash('message', 'Image file must be <= 3 MB, please try again');
-                    res.redirect('/service');
-                }
+function uploadImage(res, req){
+    const {image} = req.body;
+    console.log('image', image);
+    console.log("req", req.files);
+    if (req.files) {
+        if (allowedContentTypes.imagearray.includes(req.files['image'][0].mimetype)) {
+            let filesizeinMb = parseFloat(parseFloat(req.files['image'][0].size) / 1048576);
+            if (filesizeinMb <= 3) {
+                AwsCloud.saveToS3(req.files['image'][0].buffer, req.files['image'][0].mimetype, 'service').then((result) => {
+                    let obj = {
+                        s3_url: process.env.AWS_BUCKET_URI,
+                        url: result.data.Key
+                    };
+                    return responseManager.onSuccess('File uploaded successfully!', obj, res);
+                }).catch((error) => {
+                    return responseManager.onError(error, res);
+                });
             } else {
-                req.flash('message', 'Invalid file type only image files allowed, please try again');
-                res.redirect('/service');
+                return responseManager.badrequest({ message: 'Image file must be <= 3 MB, please try again' }, res);
             }
         } else {
-            req.flash('message', 'Invalid file to upload, please try again');
-            res.redirect('/service');
+            return responseManager.badrequest({ message: 'Invalid file type only image files allowed, please try again' }, res);
         }
     } else {
-        res.redirect('/');
+        return responseManager.badrequest({ message: 'Invalid file to upload, please try again' }, res);
     }
-});
+}
+
+// router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
+//     const token = req.cookies.token;
+//     if (token) {
+//         if (req.file) {
+//             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
+//                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
+//                 if (filesizeinMb <= 3) {
+//                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
+//                         console.log('result', result);
+//                         let obj = {
+//                             s3_url: process.env.AWS_BUCKET_URI,
+//                             url: result.data.Key
+//                         };
+//                         return responseManager.onSuccess('File uploaded successfully!', obj, res);
+//                     }).catch((error) => {
+//                         return responseManager.onError(error, res);
+//                     });
+//                 } else {
+//                     req.flash('message', 'Image file must be <= 3 MB, please try again');
+//                     res.redirect('/service');
+//                 }
+//             } else {
+//                 req.flash('message', 'Invalid file type only image files allowed, please try again');
+//                 res.redirect('/service');
+//             }
+//         } else {
+//             req.flash('message', 'Invalid file to upload, please try again');
+//             res.redirect('/service');
+//         }
+//     } else {
+//         res.redirect('/');
+//     }
+// });
 
 
 router.get('/', async (req, res) => {
@@ -75,11 +105,14 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/', upload.fields([{ name: 'image' }, { name: 'banner' }, { name: 'before' }, { name: 'after' }]), async (req, res) => {
+router.post('/', upload.single('image'), async (req, res) => {
+    console.log("req.body", req.body);
+    console.log("req.files", req.files);
+    console.log("req.file", req.file);
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
-        if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && req.files['image'] != null && req.files['banner'] != null && req.files['before'] != null && req.files['after'] != null) {
+        if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && image != null && banner != null && before != null && after != null) {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findOne({ "servicename": servicename }).lean();
             if (serviceData == null) {
@@ -91,6 +124,8 @@ router.post('/', upload.fields([{ name: 'image' }, { name: 'banner' }, { name: '
                     };
                     points.push(obj);
                 }
+                let image = uploadImage(res, req);
+                console.log('image', image);
                 let serviceslug = slugify(servicename);
                 let obj = {
                     servicename: servicename,
