@@ -120,7 +120,7 @@ router.post('/', upload.fields([
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
-        if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && image != null && banner != null && before != null && after != null) {
+        if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '') {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findOne({ "servicename": servicename }).lean();
             if (serviceData == null) {
@@ -133,7 +133,7 @@ router.post('/', upload.fields([
                     points.push(obj);
                 }
                 let image = uploadImage(res, req);
-                //console.log('image', image);
+                console.log('image', image);
                 let serviceslug = slugify(servicename);
                 let obj = {
                     servicename: servicename,
