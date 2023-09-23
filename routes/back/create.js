@@ -105,10 +105,18 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'banner', maxCount: 1 },
+    { name: 'before', maxCount: 1 },
+    { name: 'after', maxCount: 1 }
+]), async (req, res) => {
     console.log("req.body", req.body);
-    console.log("req.files", req.files);
-    console.log("req.file", req.file);
+    console.log(req.files['image']);
+    console.log(req.files['banner']);
+    console.log(req.files['before']);
+    console.log(req.files['after']);
+
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
@@ -125,7 +133,7 @@ router.post('/', upload.single('image'), async (req, res) => {
                     points.push(obj);
                 }
                 let image = uploadImage(res, req);
-                console.log('image', image);
+                //console.log('image', image);
                 let serviceslug = slugify(servicename);
                 let obj = {
                     servicename: servicename,
