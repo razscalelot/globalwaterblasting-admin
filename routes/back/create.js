@@ -106,10 +106,7 @@ router.get('/', async (req, res) => {
 
 
 router.post('/', upload.fields([
-    { name: 'image', maxCount: 1 },
-    { name: 'banner', maxCount: 1 },
-    { name: 'before', maxCount: 1 },
-    { name: 'after', maxCount: 1 }
+    { name: 'image', maxCount: 1 }
 ]), async (req, res) => {
     console.log("req.body", req.body);
     console.log(req.files['image']);
