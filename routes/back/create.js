@@ -58,7 +58,109 @@ function uploadImage(res, req) {
     }
 }
 
-router.post('/image', fileHelper.memoryUpload.fields({ name: 'image', maxCount: 1 }, { name: 'banner', maxCount: 1 }, { name: 'before', maxCount: 1 }, { name: 'after', maxCount: 1 }), async (req, res) => {
+router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        console.log('req.file', req.file);
+        if (req.file) {
+            if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
+                let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
+                if (filesizeinMb <= 3) {
+                    AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
+                        let obj = {
+                            s3_url: process.env.AWS_BUCKET_URI,
+                            url: result.data.Key
+                        };
+                        console.log('obj', obj);
+                        return responseManager.onSuccess('File uploaded successfully!', obj, res);
+                    }).catch((error) => {
+                        return responseManager.onError(error, res);
+                    });
+                } else {
+                    req.flash('message', 'Image file must be <= 3 MB, please try again');
+                    res.redirect('/service');
+                }
+            } else {
+                req.flash('message', 'Invalid file type only image files allowed, please try again');
+                res.redirect('/service');
+            }
+        } else {
+            req.flash('message', 'Invalid file to upload, please try again');
+            res.redirect('/service');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+router.post('/banner', fileHelper.memoryUpload.single('banner'), async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        console.log('req.file', req.file);
+        if (req.file) {
+            if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
+                let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
+                if (filesizeinMb <= 3) {
+                    AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
+                        let obj = {
+                            s3_url: process.env.AWS_BUCKET_URI,
+                            url: result.data.Key
+                        };
+                        console.log('obj', obj);
+                        return responseManager.onSuccess('File uploaded successfully!', obj, res);
+                    }).catch((error) => {
+                        return responseManager.onError(error, res);
+                    });
+                } else {
+                    req.flash('message', 'Image file must be <= 3 MB, please try again');
+                    res.redirect('/service');
+                }
+            } else {
+                req.flash('message', 'Invalid file type only image files allowed, please try again');
+                res.redirect('/service');
+            }
+        } else {
+            req.flash('message', 'Invalid file to upload, please try again');
+            res.redirect('/service');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+router.post('/before', fileHelper.memoryUpload.single('before'), async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        console.log('req.file', req.file);
+        if (req.file) {
+            if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
+                let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
+                if (filesizeinMb <= 3) {
+                    AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
+                        let obj = {
+                            s3_url: process.env.AWS_BUCKET_URI,
+                            url: result.data.Key
+                        };
+                        console.log('obj', obj);
+                        return responseManager.onSuccess('File uploaded successfully!', obj, res);
+                    }).catch((error) => {
+                        return responseManager.onError(error, res);
+                    });
+                } else {
+                    req.flash('message', 'Image file must be <= 3 MB, please try again');
+                    res.redirect('/service');
+                }
+            } else {
+                req.flash('message', 'Invalid file type only image files allowed, please try again');
+                res.redirect('/service');
+            }
+        } else {
+            req.flash('message', 'Invalid file to upload, please try again');
+            res.redirect('/service');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+router.post('/after', fileHelper.memoryUpload.single('after'), async (req, res) => {
     const token = req.cookies.token;
     if (token) {
         console.log('req.file', req.file);
