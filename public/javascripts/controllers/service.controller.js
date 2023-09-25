@@ -36,7 +36,7 @@ app.controller("serviceController", ($scope, $http,) => {
                 function (response) {
                     if (response.data.IsSuccess == true) {
                         if (response.data.Data) {
-                            $scope.service_image = response.data.Data;
+                            $scope.service_image = response.data.Data.url;
                         } else {
                             swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
                         }
@@ -76,7 +76,7 @@ app.controller("serviceController", ($scope, $http,) => {
                 function (response) {
                     if (response.data.IsSuccess == true) {
                         if (response.data.Data) {
-                            $scope.service_banner = response.data.Data;
+                            $scope.service_banner = response.data.Data.url;
                         } else {
                             swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
                         }
@@ -116,7 +116,7 @@ app.controller("serviceController", ($scope, $http,) => {
                 function (response) {
                     if (response.data.IsSuccess == true) {
                         if (response.data.Data) {
-                            $scope.service_before = response.data.Data;
+                            $scope.service_before = response.data.Data.url;
                         } else {
                             swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
                         }
@@ -156,7 +156,7 @@ app.controller("serviceController", ($scope, $http,) => {
                 function (response) {
                     if (response.data.IsSuccess == true) {
                         if (response.data.Data) {
-                            $scope.service_after = response.data.Data;
+                            $scope.service_after = response.data.Data.url;
                         } else {
                             swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
                         }
