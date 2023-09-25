@@ -67,7 +67,7 @@ app.controller("serviceController", ($scope, $http,) => {
             let formData = new FormData();
             formData.append("banner", $scope.sBanner);
             $http({
-                url: BASE_URL + "create/image",
+                url: BASE_URL + "create/banner",
                 method: "POST",
                 data: formData,
                 transformRequest: angular.identity,
@@ -107,7 +107,7 @@ app.controller("serviceController", ($scope, $http,) => {
             let formData = new FormData();
             formData.append("before", $scope.sBefore);
             $http({
-                url: BASE_URL + "create/image",
+                url: BASE_URL + "create/before",
                 method: "POST",
                 data: formData,
                 transformRequest: angular.identity,
@@ -147,7 +147,7 @@ app.controller("serviceController", ($scope, $http,) => {
             let formData = new FormData();
             formData.append("after", $scope.sAfter);
             $http({
-                url: BASE_URL + "create/image",
+                url: BASE_URL + "create/after",
                 method: "POST",
                 data: formData,
                 transformRequest: angular.identity,
