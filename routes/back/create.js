@@ -67,11 +67,11 @@ router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) 
                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
                 if (filesizeinMb <= 3) {
                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
-                        console.log('result', result);
                         let obj = {
                             s3_url: process.env.AWS_BUCKET_URI,
                             url: result.data.Key
                         };
+                        console.log('obj', obj);
                         return responseManager.onSuccess('File uploaded successfully!', obj, res);
                     }).catch((error) => {
                         return responseManager.onError(error, res);
@@ -113,14 +113,7 @@ router.post('/', async (req, res) => {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findOne({ "servicename": servicename }).lean();
             if (serviceData == null) {
-                let points = [];
-                for (var i = 0; i < ptitle.length; i++) {
-                    let obj = {
-                        title: ptitle[i],
-                        decs: desc[i]
-                    };
-                    points.push(obj);
-                }
+
                 let serviceslug = slugify(servicename);
                 let obj = {
                     servicename: servicename,
@@ -136,7 +129,10 @@ router.post('/', async (req, res) => {
                     servicedetails: {
                         title: title,
                         longdesc: longdesc1,
-                        points: points
+                        points: {
+                            ptitle: ptitle,
+                            desc: desc
+                        }
                     }
                 }
                 let insertedData = await primary.model(constants.MODELS.services, serviceModel).create(obj)

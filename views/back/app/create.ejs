@@ -83,7 +83,7 @@
                                                 class="px-4 pb-4 flex items-center justify-center cursor-pointer relative">
                                                 <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
                                                     class="text-primary mr-1">Upload a file</span>
-                                                <input id="horizontal-form-1" type="file"  onchange="angular.element(this).scope().fileSelectedservice(this)"
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceImage(this)"
                                                     class="w-full h-full top-0 left-0 absolute opacity-0">
                                             </div>
                                         </div>
@@ -109,8 +109,7 @@
                                                 class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
                                                 <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
                                                     class="text-primary mr-1">Upload a file</span>
-                                                <input id="horizontal-form-1" type="file" file-model="banner"
-                                                    onchange="previewImage(event, 'banner')" name="banner"
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceBanner(this)"
                                                     class="w-full h-full top-0 left-0 absolute opacity-0">
                                             </div>
                                         </div>
@@ -193,8 +192,7 @@
                                                 class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
                                                 <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
                                                     class="text-primary mr-1">Upload a file</span>
-                                                <input id="horizontal-form-1" type="file" file-model="before"
-                                                    onchange="previewImage(event, 'before')" name="before"
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceBefore(this)"
                                                     class="w-full h-full top-0 left-0 absolute opacity-0">
                                             </div>
                                         </div>
@@ -220,8 +218,7 @@
                                                 class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
                                                 <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
                                                     class="text-primary mr-1">Upload a file</span>
-                                                <input id="horizontal-form-1" type="file" file-model="after"
-                                                    onchange="previewImage(event, 'after')" name="after"
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceAfter(this)"
                                                     class="w-full h-full top-0 left-0 absolute opacity-0">
                                             </div>
                                         </div>
