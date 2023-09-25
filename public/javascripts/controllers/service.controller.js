@@ -185,6 +185,7 @@ app.controller("serviceController", ($scope, $http,) => {
                 servicename: $scope.servicename,
                 image: $scope.service_image,
                 banner: $scope.service_banner,
+                shortdesc: $scope.shortdesc,
                 longdesc: $scope.longdesc,
                 before: $scope.service_before,
                 after: $scope.service_after,
