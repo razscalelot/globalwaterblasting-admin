@@ -32,10 +32,8 @@ const slugify = str =>
         .replace(/^-+|-+$/g, '');
 
 
-function uploadImage(res, req){
-    const {image} = req.body;
-    console.log('image', image);
-    console.log("req", req.files);
+function uploadImage(res, req) {
+    console.log("req.body", req.body);
     if (req.files) {
         if (allowedContentTypes.imagearray.includes(req.files['image'][0].mimetype)) {
             let filesizeinMb = parseFloat(parseFloat(req.files['image'][0].size) / 1048576);
@@ -60,39 +58,40 @@ function uploadImage(res, req){
     }
 }
 
-// router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
-//     const token = req.cookies.token;
-//     if (token) {
-//         if (req.file) {
-//             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
-//                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
-//                 if (filesizeinMb <= 3) {
-//                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
-//                         console.log('result', result);
-//                         let obj = {
-//                             s3_url: process.env.AWS_BUCKET_URI,
-//                             url: result.data.Key
-//                         };
-//                         return responseManager.onSuccess('File uploaded successfully!', obj, res);
-//                     }).catch((error) => {
-//                         return responseManager.onError(error, res);
-//                     });
-//                 } else {
-//                     req.flash('message', 'Image file must be <= 3 MB, please try again');
-//                     res.redirect('/service');
-//                 }
-//             } else {
-//                 req.flash('message', 'Invalid file type only image files allowed, please try again');
-//                 res.redirect('/service');
-//             }
-//         } else {
-//             req.flash('message', 'Invalid file to upload, please try again');
-//             res.redirect('/service');
-//         }
-//     } else {
-//         res.redirect('/');
-//     }
-// });
+router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        console.log('req.file', req.file);
+        if (req.file) {
+            if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
+                let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
+                if (filesizeinMb <= 3) {
+                    AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
+                        console.log('result', result);
+                        let obj = {
+                            s3_url: process.env.AWS_BUCKET_URI,
+                            url: result.data.Key
+                        };
+                        return responseManager.onSuccess('File uploaded successfully!', obj, res);
+                    }).catch((error) => {
+                        return responseManager.onError(error, res);
+                    });
+                } else {
+                    req.flash('message', 'Image file must be <= 3 MB, please try again');
+                    res.redirect('/service');
+                }
+            } else {
+                req.flash('message', 'Invalid file type only image files allowed, please try again');
+                res.redirect('/service');
+            }
+        } else {
+            req.flash('message', 'Invalid file to upload, please try again');
+            res.redirect('/service');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
 
 
 router.get('/', async (req, res) => {
@@ -105,15 +104,8 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/', upload.fields([
-    { name: 'image', maxCount: 1 }
-]), async (req, res) => {
+router.post('/', async (req, res) => {
     console.log("req.body", req.body);
-    console.log(req.files['image']);
-    console.log(req.files['banner']);
-    console.log(req.files['before']);
-    console.log(req.files['after']);
-
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
@@ -129,19 +121,17 @@ router.post('/', upload.fields([
                     };
                     points.push(obj);
                 }
-                let image = uploadImage(res, req);
-                console.log('image', image);
                 let serviceslug = slugify(servicename);
                 let obj = {
                     servicename: servicename,
                     serviceslug: serviceslug,
-                    image: req.files['image'][0].filename,
-                    banner: req.files['banner'][0].filename,
+                    image: image,
+                    banner: banner,
                     shortdesc: shortdesc,
                     longdesc: longdesc,
                     images: {
-                        before: req.files['before'][0].filename,
-                        after: req.files['after'][0].filename
+                        before: before,
+                        after: after
                     },
                     servicedetails: {
                         title: title,
@@ -151,19 +141,15 @@ router.post('/', upload.fields([
                 }
                 let insertedData = await primary.model(constants.MODELS.services, serviceModel).create(obj)
                 if (insertedData && insertedData != null) {
-                    req.flash('message', 'Service created successfully!')
-                    res.redirect('/service');
+                    return responseManager.onSuccess('Service created successfully!', obj, res);
                 } else {
-                    req.flash('message', 'Something went wrong, Please try again',)
-                    res.redirect('/create');
+                    return responseManager.badrequest({ message: 'Something went wrong, Please try again' }, res);
                 }
             } else {
-                req.flash('message', 'The request message was already sent. We will contact you very soon!',)
-                res.redirect('/create');
+                return responseManager.badrequest({ message: 'Service already exist with same name, Please try again...' }, res);
             }
         } else {
-            req.flash('message', 'Invalid service name, descriprions, images and banner can not be empty, please try again',)
-            res.redirect('/create');
+            return responseManager.badrequest({ message: 'Invalid service name, descriprions, images and banner can not be empty, please try again' }, res);
         }
     } else {
         res.redirect('/');
