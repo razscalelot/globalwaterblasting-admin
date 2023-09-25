@@ -58,7 +58,7 @@ function uploadImage(res, req) {
     }
 }
 
-router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) => {
+router.post('/image', fileHelper.memoryUpload.fields({ name: 'image', maxCount: 1 }, { name: 'banner', maxCount: 1 }, { name: 'before', maxCount: 1 }, { name: 'after', maxCount: 1 }), async (req, res) => {
     const token = req.cookies.token;
     if (token) {
         console.log('req.file', req.file);
