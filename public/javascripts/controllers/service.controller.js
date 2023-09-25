@@ -1,20 +1,20 @@
 app.controller("serviceController", ($scope, $http,) => {
-    $scope.serviceImage = null;
-    $scope.serviceBanner = null;
-    $scope.serviceBefore = null;
-    $scope.serviceAfter = null;
+    $scope.sImage = null;
+    $scope.sBanner = null;
+    $scope.sBefore = null;
+    $scope.sAfter = null;
     $scope.service_image = "";
     $scope.service_banner = "";
     $scope.service_before = "";
     $scope.service_after = "";
     $scope.serviceImage = (input) => {
-        $scope.serviceImage = null;
+        $scope.sImage = null;
         if (input.files && input.files[0]) {
             var filename = input.files[0].name;
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
-                    $scope.serviceImage = input.files[0];
+                    $scope.sImage = input.files[0];
                     $scope.serviceImageUploader();
                 });
             } else {
@@ -23,9 +23,9 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceImageUploader = () => {
-        if ($scope.serviceImage != null) {
+        if ($scope.sImage != null) {
             let formData = new FormData();
-            formData.append("image", $scope.serviceImage);
+            formData.append("image", $scope.sImage);
             $http({
                 url: BASE_URL + "create/image",
                 method: "POST",
@@ -48,13 +48,13 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceBanner = (input) => {
-        $scope.serviceBanner = null;
+        $scope.sBanner = null;
         if (input.files && input.files[0]) {
             var filename = input.files[0].name;
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
-                    $scope.serviceBanner = input.files[0];
+                    $scope.sBanner = input.files[0];
                     $scope.serviceBannerUploader();
                 });
             } else {
@@ -63,9 +63,9 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceBannerUploader = () => {
-        if ($scope.serviceBanner != null) {
+        if ($scope.sBanner != null) {
             let formData = new FormData();
-            formData.append("banner", $scope.serviceBanner);
+            formData.append("banner", $scope.sBanner);
             $http({
                 url: BASE_URL + "create/image",
                 method: "POST",
@@ -88,13 +88,13 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceBefore = (input) => {
-        $scope.serviceBefore = null;
+        $scope.sBefore = null;
         if (input.files && input.files[0]) {
             var filename = input.files[0].name;
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
-                    $scope.serviceBefore = input.files[0];
+                    $scope.sBefore = input.files[0];
                     $scope.serviceBeforeUploader();
                 });
             } else {
@@ -103,9 +103,9 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceBeforeUploader = () => {
-        if ($scope.serviceBefore != null) {
+        if ($scope.sBefore != null) {
             let formData = new FormData();
-            formData.append("before", $scope.serviceBefore);
+            formData.append("before", $scope.sBefore);
             $http({
                 url: BASE_URL + "create/image",
                 method: "POST",
@@ -128,13 +128,13 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceAfter = (input) => {
-        $scope.serviceAfter = null;
+        $scope.sAfter = null;
         if (input.files && input.files[0]) {
             var filename = input.files[0].name;
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
-                    $scope.serviceBefore = input.files[0];
+                    $scope.sAfter = input.files[0];
                     $scope.serviceAfterUploader();
                 });
             } else {
@@ -143,9 +143,9 @@ app.controller("serviceController", ($scope, $http,) => {
         }
     };
     $scope.serviceAfterUploader = () => {
-        if ($scope.serviceBefore != null) {
+        if ($scope.sAfter != null) {
             let formData = new FormData();
-            formData.append("after", $scope.serviceBefore);
+            formData.append("after", $scope.sAfter);
             $http({
                 url: BASE_URL + "create/image",
                 method: "POST",
