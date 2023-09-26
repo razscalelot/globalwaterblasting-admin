@@ -167,16 +167,9 @@ app.controller("serviceController", ($scope, $http,) => {
             );
         }
     };
-    // let len = $scope.ptitle.length;
-    // let points = [];
-    // for (var i = 0; i < len; i++) {
-    //     let obj = {
-    //         title: $scope.ptitle[i],
-    //         decs: $scope.desc[i]
-    //     };
-    //     points.push(obj);
-    // }
+
     $scope.createService = function () {
+        console.log('$scope.points', $scope.points);
         $http({
             url: BASE_URL + 'create',
             method: "POST",
@@ -191,8 +184,7 @@ app.controller("serviceController", ($scope, $http,) => {
                 after: $scope.service_after,
                 title: $scope.title,
                 longdesc1: $scope.longdesc1,
-                ptitle: $scope.ptitle,
-                desc: $scope.desc,
+                points: $scope.points
             },
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
@@ -200,6 +192,13 @@ app.controller("serviceController", ($scope, $http,) => {
 
         }).then(
             function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    console.log("response", response);
+                    // window.location.href = "/service";
+                } else {
+                    console.log("response", response);
+                    window.location.href = "/create";
+                }
                 console.log("response", response);
             },
             function (error) {
@@ -208,5 +207,15 @@ app.controller("serviceController", ($scope, $http,) => {
                 console.error("Something Went Wrong! try again");
             }
         );
+    };
+    
+    $scope.points = [{title : "", description : ""}];
+
+    $scope.addInputField = function(){
+        $scope.points.push({title : "", description : ""});  
+    };
+
+    $scope.removeInputField = function(index){ 
+        $scope.points.splice( index, 1 );
     };
 });
