@@ -1,4 +1,4 @@
-app.controller("serviceController", ($scope, $http,) => {
+app.controller("serviceController", ($scope, $http, HelperService) => {
     $scope.sImage = null;
     $scope.sBanner = null;
     $scope.sBefore = null;
@@ -193,7 +193,7 @@ app.controller("serviceController", ($scope, $http,) => {
             function (response) {
                 if (response.data.IsSuccess == true && response.data.Data != 0) {
                     $scope.response = response.data.Message
-                    document.getElementById('successModel').click();                    
+                    document.getElementById('successModel').click();
                     window.location.href = "/service";
                 } else {
                     document.getElementById('errorModel').innerHTML = response.data.Message;
@@ -206,14 +206,47 @@ app.controller("serviceController", ($scope, $http,) => {
             }
         );
     };
-    
-    $scope.points = [{title : "", description : ""}];
 
-    $scope.addInputField = function(){
-        $scope.points.push({title : "", description : ""});  
+    $scope.points = [{ title: "", description: "" }];
+
+    $scope.addInputField = function () {
+        $scope.points.push({ title: "", description: "" });
     };
 
-    $scope.removeInputField = function(index){ 
-        $scope.points.splice( index, 1 );
+    $scope.removeInputField = function (index) {
+        $scope.points.splice(index, 1);
     };
+
+    $scope.services = {};
+    $scope.getService = function () {
+        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search, isDelete: $scope.isDelete, teammember: $scope.teammember, tags: $scope.selectedTags };
+        $http({
+            url: BASE_URL + 'service/list',
+            method: "POST",
+            data: request,
+            cache: false,
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        }).then(
+            function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    $scope.services = response.data.Data;
+                    $scope.pageNumberList = HelperService.paginator($scope.services.totalPages, $scope.page, 9);
+                }
+            },
+            function (error) {
+                console.log(error);
+                console.error("Something Went Wrong! try again");
+            }
+        );
+    };
+    $scope.getService();
+
+    $scope.onSearch = () => {
+        if ($scope.search.length > 2 || $scope.search.length == 0) {
+            $scope.page = 1;
+            $scope.getService();
+        }
+    }
 });

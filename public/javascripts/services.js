@@ -100,9 +100,3 @@ app.service('HelperService', function() {
 		return selectedColors;
 	}
 });
-
-app.service('SocketService', ['socketFactory', function SocketService(socketFactory) {
-    return socketFactory({
-        ioSocket: io.connect(window.location.origin)
-    });
-}]);
