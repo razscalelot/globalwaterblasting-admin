@@ -20,9 +20,9 @@ router.get('/', async (req, res) => {
             sort: { _id: -1 },
             lean: true
         }).then((serviceData) => {
-            res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message') });
+            res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message'), AWS_BUCKET_URI: process.env.AWS_BUCKET_URI });
         }).catch((error) => {
-            res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message') });
+            res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message'), AWS_BUCKET_URI: process.env.AWS_BUCKET_URI });
         })
     } else {
         res.redirect('/');

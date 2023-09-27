@@ -167,8 +167,8 @@ app.controller("serviceController", ($scope, $http,) => {
             );
         }
     };
-
     $scope.createService = function () {
+        $scope.response = {};
         console.log('$scope.points', $scope.points);
         $http({
             url: BASE_URL + 'create',
@@ -189,22 +189,20 @@ app.controller("serviceController", ($scope, $http,) => {
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
             },
-
         }).then(
             function (response) {
                 if (response.data.IsSuccess == true && response.data.Data != 0) {
-                    console.log("response", response);
-                    // window.location.href = "/service";
+                    $scope.response = response.data.Message
+                    document.getElementById('successModel').click();                    
+                    window.location.href = "/service";
                 } else {
-                    console.log("response", response);
-                    window.location.href = "/create";
+                    document.getElementById('errorModel').innerHTML = response.data.Message;
+                    document.getElementById('errorModel').click();
                 }
-                console.log("response", response);
             },
             function (error) {
-                $('#loadingdiv').hide();
-                console.log(error);
-                console.error("Something Went Wrong! try again");
+                $scope.response = error.data.Message
+                document.getElementById('errorModel').click();
             }
         );
     };

@@ -199,7 +199,7 @@ router.post('/', async (req, res) => {
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, points } = req.body;
-        // if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '') {
+        if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '') {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findOne({ "servicename": servicename }).lean();
             if (serviceData == null) {
@@ -230,9 +230,9 @@ router.post('/', async (req, res) => {
             } else {
                 return responseManager.badrequest({ message: 'Service already exist with same name, Please try again...' }, res);
             }
-        // } else {
-        //     return responseManager.badrequest({ message: 'Invalid service name, descriprions, images and banner can not be empty, please try again' }, res);
-        // }
+        } else {
+            return responseManager.badrequest({ message: 'Invalid service name, descriprions, images and banner can not be empty, please try again' }, res);
+        }
     } else {
         res.redirect('/');
     }

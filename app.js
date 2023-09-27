@@ -12,6 +12,7 @@ var fs = require('fs');
 let mongoose = require("mongoose");
 var expressLayouts = require('express-ejs-layouts');
 var flush = require('connect-flash');
+const swal = require('sweetalert');
 
 // const adminpaths = [
 //   { pathUrl: '/', routeFile: 'login'},

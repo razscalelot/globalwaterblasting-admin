@@ -1,5 +1,5 @@
- <!-- BEGIN: Content -->
- <div class="content">
+<!-- BEGIN: Content -->
+<div class="content">    
     <% if (message.length > 0) {%>
         <div class="intro-y col-span-11 alert alert-primary alert-dismissible show flex items-center mb-6"
             role="alert">
@@ -50,7 +50,7 @@
                     <tr class="intro-x">
                         <td> 
                             <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                                <img alt="<%= service.servicename %>" class="rounded-full" src="<%= service.image %>">
+                                <img alt="<%= service.servicename %>" class="rounded-full" src="<%= AWS_BUCKET_URI %><%= service.image %>">
                             </div> 
                         </td>
                         <td> <%= service.servicename %> </td>
