@@ -1,0 +1,106 @@
+ <!-- BEGIN: Content -->
+ <div class="content">
+    <% if (message.length > 0) {%>
+        <div class="intro-y col-span-11 alert alert-primary alert-dismissible show flex items-center mt-6"
+            role="alert">
+            <span><i data-lucide="info" class="w-4 h-4 mr-2"></i></span>
+            <span>
+                <%= message %>
+            </span>
+            <button type="button" class="btn-close text-white" data-tw-dismiss="alert" aria-label="Close">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+        <% } %>
+    <h2 class="intro-y text-lg font-medium mt-10">
+        Offer List
+    </h2>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+            <div class="hidden md:block mx-auto text-slate-500">Showing <%= offerData.page  %> to <%= offerData.limit  %> of <%= offerData.totalDocs  %> entries</div>
+            <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+                <div class="w-56 relative text-slate-500">
+                    <form action="?search" method="get">
+                        <input type="text" name="search" class="form-control w-56 box pr-10" placeholder="Search...">
+                        <button type="submit" class="flex items-center">
+                            <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-6" data-lucide="search"></i> 
+                        </button>
+                        <button type="submit" class="flex items-center">
+                            <input type="hidden" name="" class="form-control w-56 box pr-10" placeholder="Search...">
+                            <i data-lucide="x" class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"></i> 
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- BEGIN: Data List -->
+        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+            <table class="table table-report -mt-2">
+                <thead>
+                    <tr>
+                        <th class="whitespace-nowrap">Name</th>
+                        <th class="whitespace-nowrap">Email</th>
+                        <th class="whitespace-nowrap">Phone Number</th>
+                        <th class="whitespace-nowrap">Address</th>
+                        <th class="whitespace-nowrap">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% offerData.docs.forEach((quote)=> { %>
+                    <tr class="intro-x">
+                        <td> <%= quote.name %> </td>
+                        <td> <%= quote.email %> </td>
+                        <td><%= quote.mobile %></td>
+                        <td> <%= quote.address %>  <%= quote.postcode %> </td>
+                        <td> <%= quote.createdAt.toDateString()   %> </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: Data List -->
+        <!-- BEGIN: Pagination -->
+        <% if (offerData.docs.length > 0) { %>
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center justify-center">
+            <nav class="w-full sm:w-auto">
+                <ul class="pagination">
+                    <% if (offerData.page == 1) { %>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
+                        </li>
+                    <% } else {%>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
+                        </li>
+                    <% } %>
+                    <% var i = (Number(offerData.page) > 2 ? Number(offerData.page) - 2 : 1) %>
+                    <% if (i !== 1) {%>
+                        <li class="page-item"> <a class="page-link" href="javascript:void(0);">...</a> </li>
+                    <% } %>
+                    <% for (; i <= (Number(offerData.page) + 2) && i <= offerData.totalPages; i++ ) { %>
+                        <% if (i == offerData.page) { %>
+                            <li class="page-item disabled active"> <a class="page-link" href="javascript:void(0);"><%= i %></a> </li>
+                        <% }else{ %>
+                            <li class="page-item"> <a class="page-link" href="?page=<%= i %>"><%= i %></a> </li>
+                        <% } %>
+                        <% if (i == Number(offerData.page) + 2 && i < offerData.totalPages) {%>
+                            <li class="page-item"> <a class="page-link" href="javascript:void(0);">...</a> </li>
+                        <% } %>
+                    <% } %>
+                    <% if (offerData.page == offerData.totalPages) { %>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
+                        </li>
+                    <% } else {%>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= offerData.totalPages %>"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        </div>
+        <% } %>
+        <!-- END: Pagination -->
+    </div>
+</div>
+<!-- END: Content -->

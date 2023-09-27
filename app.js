@@ -23,6 +23,7 @@ const backpaths = [
   {pathUrl: "/dashboard", routeFile: 'dashboard'},
   {pathUrl: "/contactus", routeFile: 'contactus'},
   {pathUrl: "/quote", routeFile: 'quote'},
+  {pathUrl: "/offer", routeFile: 'offer'},
   {pathUrl: "/service", routeFile: 'service'},
   {pathUrl: "/create", routeFile: 'create'},
   {pathUrl: "/edit", routeFile: 'edit'},
