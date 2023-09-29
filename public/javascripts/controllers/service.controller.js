@@ -1,4 +1,4 @@
-app.controller("serviceController", ($scope, $http, HelperService) => {
+app.controller("serviceController", ($scope, $http, HelperService, $window) => {
     $scope.sImage = null;
     $scope.sBanner = null;
     $scope.sBefore = null;
@@ -249,4 +249,33 @@ app.controller("serviceController", ($scope, $http, HelperService) => {
             $scope.getService();
         }
     }
+
+    $scope.services = {};
+    console.log("$routeParams", $window.location);
+    $scope.getUpdateService = function () {
+        
+        let request = { id: id };
+        $http({
+            url: BASE_URL + 'edit:id',
+            method: "POST",
+            data: request,
+            cache: false,
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        }).then(
+            function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    $scope.services = response.data.Data;
+                    $scope.pageNumberList = HelperService.paginator($scope.services.totalPages, $scope.page, 9);
+                }
+            },
+            function (error) {
+                console.log(error);
+                console.error("Something Went Wrong! try again");
+            }
+        );
+    };
+    $scope.getUpdateService();
+
 });

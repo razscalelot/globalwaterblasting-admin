@@ -39,6 +39,28 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/edit', async (req, res) => {
+    console.log("Edit req.body", req.body);
+    const token = req.cookies.token;
+    if (token) {
+        const { id } = req.body;
+        if (id && id != '' && mongoose.Types.ObjectId.isValid(id)) {
+            let primary = mongoConnection.useDb(constants.DEFAULT_DB);
+            let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(id).lean();
+            if (serviceData && serviceData != null) {
+                res.render('back/app/edit', { title: 'Update Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message') });
+            } else {
+                res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', message: req.flash('message') });
+            }
+        } else {
+            req.flash('message', 'Invalid service id to update service, please try again');
+            res.redirect('/edit');
+        }
+    } else {
+        res.redirect('/');
+    }
+});
+
 router.post('/', upload.fields([{ name: 'image' }, { name: 'banner' }, { name: 'before' }, { name: 'after' }]), async (req, res) => {
     const token = req.cookies.token;
     if (token) {
