@@ -250,15 +250,12 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
         }
     }
 
-    $scope.services = {};
-    console.log("$routeParams", $window.location);
-    $scope.getUpdateService = function () {
-        
-        let request = { id: id };
+    $scope.editServices = {};
+    var id = $window.location.search.split('?id=')[1];
+    $scope.getUpdateService = function () { 
         $http({
-            url: BASE_URL + 'edit:id',
-            method: "POST",
-            data: request,
+            url: BASE_URL + 'edit/service?id=' + id ,
+            method: "GET",
             cache: false,
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
@@ -266,8 +263,7 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
         }).then(
             function (response) {
                 if (response.data.IsSuccess == true && response.data.Data != 0) {
-                    $scope.services = response.data.Data;
-                    $scope.pageNumberList = HelperService.paginator($scope.services.totalPages, $scope.page, 9);
+                    $scope.editServices = response.data.Data;
                 }
             },
             function (error) {

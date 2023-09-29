@@ -49,12 +49,12 @@
     </div>
             <div class="intro-y flex items-center mt-8">
                 <h2 class="text-lg font-medium mr-auto">
-                    <%= serviceData.servicename %>
+                    {{editServices.servicename}}
                 </h2>
             </div>
             <div class="grid grid-cols-11 gap-x-6 mt-5 pb-20">
                 <!-- BEGIN: Notification -->
-
+                {{editServices}}
                 <!-- BEGIN: Notification -->
                 <div class="intro-y col-span-11 2xl:col-span-12">
                     <form enctype="multipart/form-data">
@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="w-full mt-3 xl:mt-0 flex-1">
                                             <input name="servicename" id="product-name" type="text" class="form-control"
-                                            value="<%= serviceData.servicename %>" placeholder="Service name" ng-model="servicename">
+                                            value="{{editServices.servicename}}" placeholder="Service name" ng-model="servicename">
                                         </div>
                                     </div>
                                 </div>

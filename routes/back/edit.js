@@ -6,6 +6,7 @@ const serviceModel = require('../../models/services.model');
 let path = require('path');
 const multer = require('multer');
 const mongoose = require('mongoose');
+const responseManager = require('../../utilities/response.manager');
 
 var storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -39,18 +40,18 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/edit', async (req, res) => {
-    console.log("Edit req.body", req.body);
+router.get('/service', async (req, res) => {
+    console.log("Edit req.body", req.query);
     const token = req.cookies.token;
     if (token) {
-        const { id } = req.body;
+        const { id } = req.query;
         if (id && id != '' && mongoose.Types.ObjectId.isValid(id)) {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(id).lean();
             if (serviceData && serviceData != null) {
-                res.render('back/app/edit', { title: 'Update Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message') });
+                return responseManager.onSuccess('Service List', serviceData, res);
             } else {
-                res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', message: req.flash('message') });
+                return responseManager.onSuccess('Service List', serviceData, res);
             }
         } else {
             req.flash('message', 'Invalid service id to update service, please try again');
