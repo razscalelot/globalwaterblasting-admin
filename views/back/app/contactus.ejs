@@ -1,22 +1,19 @@
  <!-- BEGIN: Content -->
- <div class="content">
+ <script src="/javascripts/controllers/contactus.controller.js"></script>
+ <div class="content" ng-controller="contactusController">
     <h2 class="intro-y text-lg font-medium mt-10">
         Contact Us List
     </h2>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <div class="hidden md:block mx-auto text-slate-500">Showing <%= contactusData.page  %> to <%= contactusData.limit  %> of <%= contactusData.totalDocs  %> entries</div>
+            <a href="javascript:void(0);" class=""></a>
+            <div class="hidden md:block mx-auto text-slate-500">Showing {{ contactus.page }} to
+                {{contactus.limit}} of {{contactus.totalDocs}} entries</div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <div class="w-56 relative text-slate-500">
-                    <form action="?search" method="get">
-                        <input type="text" name="search" class="form-control w-56 box pr-10" placeholder="Search...">
-                        <button type="submit" class="flex items-center">
-                            <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-6" data-lucide="search"></i> 
-                        </button>
-                        <button type="submit" class="flex items-center">
-                            <input type="hidden" name="" class="form-control w-56 box pr-10" placeholder="Search...">
-                            <i data-lucide="x" class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0"></i> 
-                        </button>
+                    <form>
+                        <input type="text" name="search" class="form-control w-56 box pr-10"
+                            placeholder="Search..." ng-keyup="onSearch()" placeholder="Search" ng-model="search">
                     </form>
                 </div>
             </div>
@@ -34,60 +31,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% contactusData.docs.forEach((contact)=> { %>
-                    <tr class="intro-x">
-                        <td> <%= contact.name %> </td>
-                        <td> <%= contact.email %> </td>
-                        <td><%= contact.mobile %></td>
-                        <td> <%= contact.address %>  <%= contact.postcode %> </td>
-                        <td> <%= contact.createdAt.toDateString()   %> </td>
+                    <tr class="intro-x" ng-repeat="contact in contactus.docs">
+                        <td>{{contact.name }}</td>
+                        <td>{{contact.email }}</td>
+                        <td>{{contact.mobile  }}</td>
+                        <td>{{contact.address  }} {{contact.postcode }}</td>
+                        <td>{{contact.createdAt | date }}</td>
                     </tr>
-                    <% }) %>
+                    <tr class="intro-x" ng-if="contactus.docs.length == 0" style="background-color: #495057;">
+                        <td colspan="8" align="center" class="text-danger"> No Data Found! </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         <!-- END: Data List -->
         <!-- BEGIN: Pagination -->
-        <% if (contactusData.docs.length > 0) { %>
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center justify-center">
             <nav class="w-full sm:w-auto">
                 <ul class="pagination">
-                    <% if (contactusData.page == 1) { %>
-                        <li class="page-item disabled">
-                            <a class="page-link" href="javascript:void(0);"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
-                        </li>
-                    <% } else {%>
-                        <li class="page-item">
-                            <a class="page-link" href="?page=1"> <i class="w-4 h-4" data-lucide="chevrons-left"></i> </a>
-                        </li>
-                    <% } %>
-                    <% var i = (Number(contactusData.page) > 2 ? Number(contactusData.page) - 2 : 1) %>
-                    <% if (i !== 1) {%>
-                        <li class="page-item"> <a class="page-link" href="javascript:void(0);">...</a> </li>
-                    <% } %>
-                    <% for (; i <= (Number(contactusData.page) + 2) && i <= contactusData.totalPages; i++ ) { %>
-                        <% if (i == contactusData.page) { %>
-                            <li class="page-item disabled active"> <a class="page-link" href="javascript:void(0);"><%= i %></a> </li>
-                        <% }else{ %>
-                            <li class="page-item"> <a class="page-link" href="?page=<%= i %>"><%= i %></a> </li>
-                        <% } %>
-                        <% if (i == Number(contactusData.page) + 2 && i < contactusData.totalPages) {%>
-                            <li class="page-item"> <a class="page-link" href="javascript:void(0);">...</a> </li>
-                        <% } %>
-                    <% } %>
-                    <% if (contactusData.page == contactusData.totalPages) { %>
-                        <li class="page-item disabled">
-                            <a class="page-link" href="javascript:void(0);"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
-                        </li>
-                    <% } else {%>
-                        <li class="page-item">
-                            <a class="page-link" href="?page=<%= contactusData.totalPages %>"> <i class="w-4 h-4" data-lucide="chevrons-right"></i> </a>
-                        </li>
-                    <% } %>
+                    <li class="page-item {{ page == 1 ? 'disabled' : '' }}">
+                        <a class="page-link" style="cursor: pointer" tabindex="-1" aria-disabled="true"
+                            ng-click="switchPage(1)"><i class="w-4 h-4" data-lucide="chevrons-left"></i></a>
+                    </li>
+                    <li class="page-item {{ contactus.hasPrevPage ? '' : 'disabled' }}">
+                        <a class="page-link" style="cursor: pointer" ng-click="switchPage(contactus.prevPage)"
+                            tabindex="-1" aria-disabled="true"><i class="w-4 h-4" data-lucide="chevron-left"></i></a>
+                    </li>
+
+                    <li class="page-item {{ page == n ? 'active' : '' }} {{n==0?'disabled':''}}"
+                        ng-repeat="n in pageNumberList track by $index">
+                        <a class="page-link" style="cursor: pointer" ng-click="switchPage(n)">
+                            {{ (n != 0) ? n : '...' }}
+                        </a>
+                    </li>
+
+                    <li class="page-item {{ contactus.hasNextPage ? '' : 'disabled' }}">
+                        <a class="page-link" style="cursor: pointer" ng-click="switchPage(contactus.nextPage)"><i class="w-4 h-4" data-lucide="chevron-right"></i></a>
+                    </li>
+                    <li class="page-item {{ page == contactus.totalPages ? 'disabled' : '' }}">
+                        <a class="page-link" style="cursor: pointer" ng-click="switchPage(contactus.totalPages)"><i class="w-4 h-4" data-lucide="chevrons-right"></i></a>
+                    </li>
                 </ul>
             </nav>
         </div>
-        <% } %>
         <!-- END: Pagination -->
     </div>
 </div>

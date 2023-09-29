@@ -2,27 +2,27 @@ let mongoose = require("mongoose");
 let mongoosePaginate = require("mongoose-paginate-v2");
 let schema = new mongoose.Schema({
 	fname: {
-		type: String, 
-		required:true, 
-		trim:true
+		type: String,
+		required: true,
+		trim: true
 	},
 	lname: {
-		type: String, 
-		required:true, 
-		trim:true
+		type: String,
+		required: true,
+		trim: true
 	},
 	email: {
-		type:String,
-    required:true, 
-    unique:true
+		type: String,
+		required: true,
+		unique: true
 	},
 	password: {
-		type:String,
-		required:true
+		type: String,
+		required: true
 	},
 	tc: {
-		type:Boolean,
-		required:true
+		type: Boolean,
+		required: true
 	},
 	createdBy: {
 		type: mongoose.Types.ObjectId,

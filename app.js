@@ -11,6 +11,9 @@ var multer = require('multer');
 var fs = require('fs');
 let mongoose = require("mongoose");
 var expressLayouts = require('express-ejs-layouts');
+var flush = require('connect-flash');
+const swal = require('sweetalert');
+
 // const adminpaths = [
 //   { pathUrl: '/', routeFile: 'login'},
 //   { pathUrl: '/dashboard', routeFile: 'dashboard'},
@@ -22,8 +25,11 @@ const backpaths = [
   {pathUrl: "/dashboard", routeFile: 'dashboard'},
   {pathUrl: "/contactus", routeFile: 'contactus'},
   {pathUrl: "/quote", routeFile: 'quote'},
+  {pathUrl: "/offer", routeFile: 'offer'},
   {pathUrl: "/service", routeFile: 'service'},
   {pathUrl: "/create", routeFile: 'create'},
+  {pathUrl: "/edit", routeFile: 'edit'},
+  {pathUrl: "/remove", routeFile: 'remove'},
 ]
 var app = express();
 const oneDay = 1000 * 60 * 60 * 24;
@@ -37,13 +43,23 @@ app.use(
         saveUninitialized: true
     })
 );
+// app.use((res, req, next) =>{
+//     res.locals.message == req.session.message;
+//     delete req.session.message;
+//     next();
+// })
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(flush());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', 'back/layouts/layout');
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/angular", express.static(__dirname + "/node_modules/angular"));

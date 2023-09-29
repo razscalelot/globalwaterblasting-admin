@@ -8,9 +8,15 @@
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="assets/css/app.css" />
         <!-- END: CSS Assets-->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="/angular/angular.min.js"></script>
+        <script src="/javascripts/constants.js"></script>
+        <script src="/javascripts/filters.js"></script>
+        <script src="/javascripts/directives.js"></script>
+        <script src="/javascripts/services.js"></script>
     </head>
     <!-- END: Head -->
-    <body class="py-5 md:py-0">
+    <body ng-app="GlobalWaterBlasting" ng-cloak class="py-5 md:py-0">
         <!-- BEGIN: Mobile Menu -->
         <div class="mobile-menu md:hidden">
             <div class="mobile-menu-bar">
@@ -99,6 +105,14 @@
                             <div class="side-menu__icon"> <i data-lucide="message-circle"></i> </div>
                             <div class="side-menu__title">
                                 Quotes
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/offer" class="side-menu <%- (active == 'offer') ? 'side-menu--active' : '' -%>">
+                            <div class="side-menu__icon"> <i data-lucide="percent" ></i> </div>
+                            <div class="side-menu__title">
+                                Offer
                             </div>
                         </a>
                     </li>

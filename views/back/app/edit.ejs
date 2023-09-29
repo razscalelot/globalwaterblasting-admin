@@ -1,0 +1,393 @@
+<script src="/javascripts/controllers/service.controller.js"></script>
+<!-- BEGIN: Content -->
+<div class="content" ng-controller="serviceController">
+    <div class="preview">
+        <!-- BEGIN: Modal Toggle -->
+        <div class="text-center hidden"> <a href="javascript:;" id="errorModel" data-tw-toggle="modal" data-tw-target="#warning-modal-preview" class="btn btn-primary">Show Modal</a> </div>
+        <!-- END: Modal Toggle -->
+        <!-- BEGIN: Modal Content -->
+        <div id="warning-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="p-5 text-center">
+                            <i data-lucide="x-circle" class="w-16 h-16 text-warning mx-auto mt-3"></i> 
+                            <div class="text-3xl mt-5">Oops...</div>
+                            <div class="text-slate-500 mt-2" id="errorText">{{response}}</div>
+                        </div>
+                        <div class="px-5 pb-8 text-center">
+                            <button type="button" data-tw-dismiss="modal" class="btn w-24 btn-primary">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Modal Content -->
+    </div>
+    <div class="preview">
+        <!-- BEGIN: Modal Toggle -->
+        <div class="text-center hidden"> <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#successModel" class="btn btn-primary">Show Modal</a> </div>
+        <!-- END: Modal Toggle -->
+        <!-- BEGIN: Modal Content -->
+        <div id="successModel" class="modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="p-5 text-center">
+                            <i data-lucide="check-circle" class="w-16 h-16 text-success mx-auto mt-3"></i> 
+                            <div class="text-3xl mt-5">Good job!</div>
+                            <div class="text-slate-500 mt-2">{{response}}</div>
+                        </div>
+                        <div class="px-5 pb-8 text-center">
+                            <button type="button" data-tw-dismiss="modal" class="btn btn-primary w-24">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Modal Content -->
+    </div>
+            <div class="intro-y flex items-center mt-8">
+                <h2 class="text-lg font-medium mr-auto">
+                    {{editServices.servicename}}
+                </h2>
+            </div>
+            <div class="grid grid-cols-11 gap-x-6 mt-5 pb-20">
+                <!-- BEGIN: Notification -->
+                {{editServices}}
+                <!-- BEGIN: Notification -->
+                <div class="intro-y col-span-11 2xl:col-span-12">
+                    <form enctype="multipart/form-data">
+                        <!-- BEGIN: Product Information -->
+                        <div class="intro-y box p-5 mt-5">
+                            <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                <div
+                                    class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                    Service Name
+                                </div>
+                                <div class="mt-5">
+                                    <div
+                                        class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                        <div class="form-label xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Service Name</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mt-3 xl:mt-0 flex-1">
+                                            <input name="servicename" id="product-name" type="text" class="form-control"
+                                            value="{{editServices.servicename}}" placeholder="Service name" ng-model="servicename">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Product Information -->
+                        <!-- BEGIN: Uplaod Product -->
+                        <div class="intro-y box p-5 mt-5">
+                            <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                <div
+                                    class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                    Upload Service Image
+                                </div>
+                                <div class="mt-5">
+                                    <div class="form-inline items-start flex-col xl:flex-row mt-10">
+                                        <div class="form-label w-full xl:w-64 xl:!mx-5">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Service Photos</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                            <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                                <div
+                                                    class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                                    <img class="rounded-md" alt="Service Photos" id="image">
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="px-4 pb-4 flex items-center justify-center cursor-pointer relative">
+                                                <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                                    class="text-primary mr-1">Upload a file</span>
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceImage(this)"
+                                                    value="<%= serviceData.image %>" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                            </div>
+                                        </div>
+                                        <div class="form-label w-full xl:w-64 xl:!mx-5">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Service Banner</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                            <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                                <div
+                                                    class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                                    <img class="rounded-md" alt="Service Banner" id="banner">
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
+                                                <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                                    class="text-primary mr-1">Upload a file</span>
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceBanner(this)"
+                                                    value="<%= serviceData.banner %>" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Uplaod Product -->
+                        <!-- BEGIN: Product Detail -->
+                        <div class="intro-y box p-5 mt-5">
+                            <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                <div
+                                    class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                    Service Detail </div>
+                                <div class="mt-5">
+                                    <div
+                                        class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                        <div class="form-label xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Service Short Description</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <textarea id="validation-form-6" class="form-control" name="shortdesc"
+                                            placeholder="Type your Short Description" ng-model="shortdesc"><%= serviceData.shortdesc %></textarea>
+                                    </div>
+                                    <div
+                                        class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                        <div class="form-label xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Service Long Description</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mt-3 xl:mt-0 flex-1">
+                                            <textarea id="validation-form-6" class="form-control" name="longdesc" ng-model="longdesc"
+                                                placeholder="Type your Short Description"><%= serviceData.longdesc %></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Product Detail -->
+                        <!-- BEGIN: Uplaod Product -->
+                        <div class="intro-y box p-5 mt-5">
+                            <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                <div
+                                    class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                    Upload Before & After Service Image
+                                </div>
+                                <div class="mt-5">
+                                    <div class="form-inline items-start flex-col xl:flex-row mt-10">
+                                        <div class="form-label w-full xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Before Service Photos</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                            <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                                <div
+                                                    class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                                    <img class="rounded-md" alt="Before Service Photos" id="before">
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
+                                                <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                                    class="text-primary mr-1">Upload a file</span>
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceBefore(this)"
+                                                    value="<%= serviceData.before %>" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                            </div>
+                                        </div>
+                                        <div class="form-label w-full xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">After Service Photo</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-full mt-3 xl:mt-0 flex-1 border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                                            <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
+                                                <div
+                                                    class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
+                                                    <img class="rounded-md" alt="After Service Photos" id="after">
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="px-4 pb-4 mt-5 flex items-center justify-center cursor-pointer relative">
+                                                <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span
+                                                    class="text-primary mr-1">Upload a file</span>
+                                                <input id="horizontal-form-1" type="file" onchange="angular.element(this).scope().serviceAfter(this)"
+                                                    value="<%= serviceData.after %>" class="w-full h-full top-0 left-0 absolute opacity-0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Uplaod Product -->
+                        <!-- BEGIN: Product Variant -->
+                        <div class="intro-y box p-5 mt-5">
+                            <div class="border border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
+                                <div class="font-medium text-base flex items-center border-b border-slate-200/60 dark:border-darkmode-400 pb-5">
+                                    Service Information
+                                </div>
+                                <div class="mt-5">
+                                    <div
+                                        class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                        <div class="form-label xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Title</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mt-3 xl:mt-0 flex-1">
+                                            <input name="title" id="product-name" type="text" class="form-control" ng-model="title"
+                                                value="<%= serviceData.title %>" placeholder="Enter Here...">
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="form-inline items-start flex-col xl:flex-row mt-5 pt-5 first:mt-0 first:pt-0">
+                                        <div class="form-label xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Title Description</div>
+                                                    <div
+                                                        class="ml-2 px-2 py-0.5 bg-slate-200 text-slate-600 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md">
+                                                        Required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <textarea id="validation-form-6" class="form-control" name="longdesc1"
+                                            placeholder="Type your description" ng-model="longdesc1"><%= serviceData.longdesc1 %></textarea>
+                                    </div>
+                                    <div
+                                        class="form-inline items-start flex-col xl:flex-row mt-2 pt-2 first:mt-0 first:pt-0">
+                                        <div class="form-label xl:w-64 xl:!mr-10">
+                                            <div class="text-left">
+                                                <div class="flex items-center">
+                                                    <div class="font-medium">Service Points</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full mt-3 xl:mt-0 flex-1">
+                                            <div class="relative pl-5 pr-5 xl:pr-10 py-10 bg-slate-50 dark:bg-transparent dark:border rounded-md">
+                                                <a href="" class="text-slate-500 absolute top-0 right-0 mr-4 mt-4">
+                                                    <i data-lucide="x" class="w-5 h-5"></i> </a>
+                                                <div>
+                                                    <div class="input_field_wrapper">
+                                                        <div ng-repeat="point in serviceData.servicedetails.points" class="mt-5">
+                                                            <div class="form-inline mt-5 first:mt-0">
+                                                                <label class="form-label sm:w-20">Title</label>
+                                                                <div class="flex items-center flex-1 xl:pr-20">
+                                                                    <div class="input-group flex-1">
+                                                                        <input type="text"
+                                                                            class="form-control" ng-model="serviceData.servicedetails.points[$index].title"
+                                                                            placeholder="Enter Here...">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-inline mt-5 items-start first:mt-0">
+                                                                <label class="form-label mt-2 sm:w-20">Description</label>
+                                                                <div class="flex-1">
+                                                                    <div class="xl:flex items-center mt-5 first:mt-0">
+                                                                        <div class="input-group flex-1">
+                                                                            <textarea id="validation-form-6"
+                                                                                class="form-control"
+                                                                                placeholder="Type your description" ng-model="serviceData.servicedetails.points[$index].description"></textarea>
+                                                                        </div>
+                                                                        <div
+                                                                            class="w-20 flex text-slate-500 mt-3 xl:mt-0">
+                                                                            <a href="javascript:void(0);" ng-click="removeInputField($index)" class="ml-3 xl:ml-5">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2" class="lucide lucide-trash-2 w-4 h-4"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="xl:ml-20 xl:pl-5 xl:pr-20 mt-5 first:mt-0">
+                                                        <button type="button" ng-click="addInputField()"
+                                                            class="btn btn-outline-primary border-dashed w-full">
+                                                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                                            Add New Point
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Product Variant -->
+                        <div class="flex justify-end flex-col md:flex-row gap-2 mt-5">
+                            <button type="reset"
+                                class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Cancel</button>
+                            <button type="submit"
+                                class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Save
+                                & Add
+                                New Service</button>
+                            <button type="button" class="btn py-3 btn-primary w-full md:w-52" ng-click="createService()">Save</button>
+                            <!-- <input type="submit" class="btn py-3 btn-primary w-full md:w-52" value="Save"/> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+</div>
+<!-- END: Content -->
+
+<script type="text/javascript">
+    function previewImage(event, preview) {
+        var input = event.target;
+        var image = document.getElementById(preview);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                image.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
