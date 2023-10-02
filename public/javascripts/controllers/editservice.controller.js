@@ -182,7 +182,8 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
             function (response) {
                 if (response.data.IsSuccess == true && response.data.Data != 0) {
                     $scope.editServices = response.data.Data;
-                    console.log($scope.editServices)
+                    console.log($scope.editServices.images.before)
+                    console.log($scope.editServices.images.after)
                 }
             },
             function (error) {
