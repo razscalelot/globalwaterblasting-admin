@@ -220,10 +220,10 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
         console.log("after", editServices.images.after);
 
         
-        console.log("image", ($scope.service_image != null) ? editServices.image : $scope.service_image);
-        console.log("banner",($scope.service_banner != null) ? editServices.banner : $scope.service_banner);
-        console.log("before", ($scope.service_before != null) ? editServices.images.before : $scope.service_before);
-        console.log("after", ($scope.service_after != null) ? editServices.images.after : $scope.service_after);
+        console.log("image", ($scope.service_image == null) ? editServices.image : $scope.service_image);
+        console.log("banner",($scope.service_banner == null) ? editServices.banner : $scope.service_banner);
+        console.log("before", ($scope.service_before == null) ? editServices.images.before : $scope.service_before);
+        console.log("after", ($scope.service_after == null) ? editServices.images.after : $scope.service_after);
         // $http({
         //     url: BASE_URL + 'edit',
         //     method: "POST",
