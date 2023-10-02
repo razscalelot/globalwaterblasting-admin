@@ -217,8 +217,8 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                 banner: (editServices.service_banner == null) ? editServices.banner : editServices.banner,
                 shortdesc: editServices.shortdesc,
                 longdesc: editServices.longdesc,
-                before: (editServices.service_before == null) ? editServices.before : editServices.service_before,
-                after: (editServices.service_after == null) ? editServices.after : editServices.service_after,
+                before: (editServices.service_before == null) ? editServices.images.before : editServices.service_before,
+                after: (editServices.service_after == null) ? editServices.images.after : editServices.service_after,
                 title: editServices.servicedetails.title,
                 longdesc1: editServices.servicedetails.longdesc1,
                 points: editServices.servicedetails.points
