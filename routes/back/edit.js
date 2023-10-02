@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
     console.log("req.body", req.body);
     const token = req.cookies.token;
     if (token) {
-        let { serviceid, servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, points } = req.body;
+        let { serviceid, servicename, image, banner, shortdesc, longdesc, images, title, longdesc1, points } = req.body;
         if (serviceid && serviceid != '' && mongoose.Types.ObjectId.isValid(serviceid)) {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
@@ -86,10 +86,7 @@ router.post('/', async (req, res) => {
                     banner: banner,
                     shortdesc: shortdesc,
                     longdesc: longdesc,
-                    images: {
-                        before: before,
-                        after: after
-                    },
+                    images: images,
                     servicedetails: {
                         title: title,
                         longdesc: longdesc1,
