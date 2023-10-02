@@ -207,6 +207,7 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
     };
 
     $scope.updateService = function (editServices) {
+        console.log("editServices", editServices);
         console.log("image", ($scope.service_image != null) ? editServices.image : $scope.service_image);
         console.log("banner",($scope.service_banner != null) ? editServices.banner : $scope.service_banner);
         console.log("before", ($scope.service_before != null) ? editServices.images.before : $scope.service_before);
