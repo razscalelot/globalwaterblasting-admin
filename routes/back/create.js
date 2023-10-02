@@ -199,7 +199,7 @@ router.post('/', async (req, res) => {
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, points } = req.body;
-        if (servicename && servicename != '' &&image && image != '' && banner && banner != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && images && images.length > 0 && title && title != '' && longdesc1 && longdesc1 != '' && points && points.length > 0) {
+        if (servicename && servicename != '' && image && image != '' && banner && banner != '' && before && before != '' && after && after != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && title && title != '' && longdesc1 && longdesc1 != '' && points && points.length > 0) {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findOne({ "servicename": servicename }).lean();
             if (serviceData == null) {

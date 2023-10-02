@@ -274,4 +274,31 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
         }
     }
 
+    $scope.deleteService = function (id) {
+        $scope.response = {};
+        $http({
+            url: BASE_URL + 'remove',
+            method: "POST",
+            data: { id: "" },
+            cache: false,
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        }).then(
+            function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    $scope.response = response.data.Message
+                    document.getElementById('successModel').click();
+                } else {
+                    document.getElementById('errorModel').innerHTML = response.data.Message;
+                    document.getElementById('errorModel').click();
+                }
+            },
+            function (error) {
+                $scope.response = error.data.Message
+                document.getElementById('errorModel').click();
+            }
+        );
+    }
+
 });
