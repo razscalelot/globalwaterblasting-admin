@@ -279,18 +279,20 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
         $http({
             url: BASE_URL + 'remove',
             method: "POST",
-            data: { id: "" },
+            data: { id: id },
             cache: false,
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
             },
         }).then(
             function (response) {
+                console.log("response", response);
                 if (response.data.IsSuccess == true && response.data.Data != 0) {
                     $scope.response = response.data.Message
                     document.getElementById('successModel').click();
+                    $scope.getService();
                 } else {
-                    document.getElementById('errorModel').innerHTML = response.data.Message;
+                    $scope.response = response.data.Message
                     document.getElementById('errorModel').click();
                 }
             },
@@ -299,6 +301,13 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                 document.getElementById('errorModel').click();
             }
         );
+    }
+
+    $scope.deleteModal = function(id, name){
+        console.log("id", id);
+        document.getElementById('serviceDeleteModal').click();
+        $scope.serviceDeleteID = id;
+        $scope.serviceDeleteName = name;
     }
 
 });
