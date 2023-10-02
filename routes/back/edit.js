@@ -71,51 +71,51 @@ router.get('/service', async (req, res) => {
 
 router.post('/', async (req, res) => {
     console.log("req.body", req.body);
-    const token = req.cookies.token;
-    if (token) {
-        let { serviceid, servicename, image, banner, shortdesc, longdesc, images, title, longdesc1, points } = req.body;
-        if (serviceid && serviceid != '' && mongoose.Types.ObjectId.isValid(serviceid)) {
-            let primary = mongoConnection.useDb(constants.DEFAULT_DB);
-            let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
-            if (serviceData && serviceData != null) {
-                let serviceslug = slugify(servicename);
-                let obj = {
-                    servicename: servicename,
-                    serviceslug: serviceslug,
-                    image: image,
-                    banner: banner,
-                    shortdesc: shortdesc,
-                    longdesc: longdesc,
-                    images: images,
-                    servicedetails: {
-                        title: title,
-                        longdesc: longdesc1,
-                        points: points
-                    }
-                }
-                let insertedData = await primary.model(constants.MODELS.services, serviceModel).findByIdAndUpdate(serviceid, obj);
-                if (insertedData && insertedData != null) {
-                    return responseManager.onSuccess('Service updated successfully!', serviceData, res);
-                    // req.flash('message', 'Service updated successfully!');
-                    // res.redirect('/service');
-                } else {
-                    return responseManager.badrequest({message: 'Something went wrong, Please try again'}, res);
-                    // req.flash('message', 'Something went wrong, Please try again');
-                    // res.redirect('/service');
-                }
-            } else {
-                return responseManager.badrequest({message: 'Invalid service id to update service, please try again'}, res);
-                // req.flash('message', 'Invalid service id to update service, please try again');
-                // res.redirect('/service');
-            }
-        } else {
-            return responseManager.badrequest({message: 'Invalid service id to update service, please try again'}, res);
-            // req.flash('message', 'Invalid service id to update service, please try again');
-            // res.redirect('/service');
-        }
-    } else {
-        res.redirect('/');
-    }
+    // const token = req.cookies.token;
+    // if (token) {
+    //     let { serviceid, servicename, image, banner, shortdesc, longdesc, images, title, longdesc1, points } = req.body;
+    //     if (serviceid && serviceid != '' && mongoose.Types.ObjectId.isValid(serviceid)) {
+    //         let primary = mongoConnection.useDb(constants.DEFAULT_DB);
+    //         let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
+    //         if (serviceData && serviceData != null) {
+    //             let serviceslug = slugify(servicename);
+    //             let obj = {
+    //                 servicename: servicename,
+    //                 serviceslug: serviceslug,
+    //                 image: image,
+    //                 banner: banner,
+    //                 shortdesc: shortdesc,
+    //                 longdesc: longdesc,
+    //                 images: images,
+    //                 servicedetails: {
+    //                     title: title,
+    //                     longdesc: longdesc1,
+    //                     points: points
+    //                 }
+    //             }
+    //             let insertedData = await primary.model(constants.MODELS.services, serviceModel).findByIdAndUpdate(serviceid, obj);
+    //             if (insertedData && insertedData != null) {
+    //                 return responseManager.onSuccess('Service updated successfully!', serviceData, res);
+    //                 // req.flash('message', 'Service updated successfully!');
+    //                 // res.redirect('/service');
+    //             } else {
+    //                 return responseManager.badrequest({message: 'Something went wrong, Please try again'}, res);
+    //                 // req.flash('message', 'Something went wrong, Please try again');
+    //                 // res.redirect('/service');
+    //             }
+    //         } else {
+    //             return responseManager.badrequest({message: 'Invalid service id to update service, please try again'}, res);
+    //             // req.flash('message', 'Invalid service id to update service, please try again');
+    //             // res.redirect('/service');
+    //         }
+    //     } else {
+    //         return responseManager.badrequest({message: 'Invalid service id to update service, please try again'}, res);
+    //         // req.flash('message', 'Invalid service id to update service, please try again');
+    //         // res.redirect('/service');
+    //     }
+    // } else {
+    //     res.redirect('/');
+    // }
 });
 
 module.exports = router;
