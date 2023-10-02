@@ -65,7 +65,7 @@ router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) 
         if (req.file) {
             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
-                if (filesizeinMb <= 3) {
+                if (filesizeinMb <= 7) {
                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
                         let obj = {
                             s3_url: process.env.AWS_BUCKET_URI,
@@ -96,7 +96,7 @@ router.post('/banner', fileHelper.memoryUpload.single('banner'), async (req, res
         if (req.file) {
             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
-                if (filesizeinMb <= 3) {
+                if (filesizeinMb <= 7) {
                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
                         let obj = {
                             s3_url: process.env.AWS_BUCKET_URI,
@@ -127,7 +127,7 @@ router.post('/before', fileHelper.memoryUpload.single('before'), async (req, res
         if (req.file) {
             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
-                if (filesizeinMb <= 3) {
+                if (filesizeinMb <= 7) {
                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
                         let obj = {
                             s3_url: process.env.AWS_BUCKET_URI,
@@ -158,7 +158,7 @@ router.post('/after', fileHelper.memoryUpload.single('after'), async (req, res) 
         if (req.file) {
             if (allowedContentTypes.imagearray.includes(req.file.mimetype)) {
                 let filesizeinMb = parseFloat(parseFloat(req.file.size) / 1048576);
-                if (filesizeinMb <= 3) {
+                if (filesizeinMb <= 7) {
                     AwsCloud.saveToS3(req.file.buffer, req.file.mimetype, 'service').then((result) => {
                         let obj = {
                             s3_url: process.env.AWS_BUCKET_URI,
