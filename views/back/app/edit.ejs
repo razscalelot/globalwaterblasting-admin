@@ -3,10 +3,10 @@
 <div class="content" ng-controller="editServiceController">
     <div class="preview">
         <!-- BEGIN: Modal Toggle -->
-        <div class="text-center hidden"> <a href="javascript:;" id="errorModel" data-tw-toggle="modal" data-tw-target="#warning-modal-preview" class="btn btn-primary">Show Modal</a> </div>
+        <div class="text-center hidden"> <a href="javascript:;" id="errorModel" data-tw-toggle="modal" data-tw-target="#warningModel" class="btn btn-primary">Show Modal</a> </div>
         <!-- END: Modal Toggle -->
         <!-- BEGIN: Modal Content -->
-        <div id="warning-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+        <div id="warningModel" class="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body p-0">
@@ -110,7 +110,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img src="<%= AWS_BUCKET_URI %>{{editServices.image}}" class="rounded-md" alt="Service Photos" id="image">
+                                                    <img ng-src="{{PreviewImage}}" src="<%= AWS_BUCKET_URI %>{{editServices.image}}" class="rounded-md" alt="Service Photos" id="image">
                                                 </div>
                                             </div>
                                             <div
@@ -136,7 +136,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img src="<%= AWS_BUCKET_URI %>{{editServices.banner}}" class="rounded-md" alt="Service Banner" id="banner">
+                                                    <img ng-src="{{PreviewBanner}}" src="<%= AWS_BUCKET_URI %>{{editServices.banner}}" class="rounded-md" alt="Service Banner" id="banner">
                                                 </div>
                                             </div>
                                             <div
@@ -219,7 +219,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img src="<%= AWS_BUCKET_URI %>{{editServices.images.before}}" class="rounded-md" alt="Before Service Photos" id="before">
+                                                    <img ng-src="{{PreviewBefore}}" src="<%= AWS_BUCKET_URI %>{{editServices.images.before}}" class="rounded-md" alt="Before Service Photos" id="before">
                                                 </div>
                                             </div>
                                             <div
@@ -245,7 +245,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img src="<%= AWS_BUCKET_URI %>{{editServices.images.after}}" class="rounded-md" alt="After Service Photos" id="after">
+                                                    <img ng-src="{{PreviewAfter}}" src="<%= AWS_BUCKET_URI %>{{editServices.images.after}}" class="rounded-md" alt="After Service Photos" id="after">
                                                 </div>
                                             </div>
                                             <div

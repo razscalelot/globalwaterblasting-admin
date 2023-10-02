@@ -7,6 +7,7 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
     $scope.service_banner = "";
     $scope.service_before = "";
     $scope.service_after = "";
+    $scope.response = {};
     $scope.serviceImage = (input) => {
         $scope.sImage = null;
         if (input.files && input.files[0]) {
@@ -14,6 +15,12 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewImage = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sImage = input.files[0];
                     $scope.serviceImageUploader();
                 });
@@ -34,15 +41,18 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                 headers: { "Content-Type": undefined, "Process-Data": false, },
             }).then(
                 function (response) {
+                    console.log("response", response);
                     if (response.data.IsSuccess == true) {
                         if (response.data.Data) {
                             $scope.service_image = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -54,6 +64,12 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewBanner = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sBanner = input.files[0];
                     $scope.serviceBannerUploader();
                 });
@@ -78,11 +94,13 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                         if (response.data.Data) {
                             $scope.service_banner = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -94,6 +112,12 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewBefore = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sBefore = input.files[0];
                     $scope.serviceBeforeUploader();
                 });
@@ -118,11 +142,13 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                         if (response.data.Data) {
                             $scope.service_before = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -134,6 +160,12 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewAfter = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sAfter = input.files[0];
                     $scope.serviceAfterUploader();
                 });
@@ -158,11 +190,13 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                         if (response.data.Data) {
                             $scope.service_after = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -170,9 +204,9 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
 
     $scope.editServices = {};
     var id = $window.location.search.split('?id=')[1];
-    $scope.getUpdateService = function () { 
+    $scope.getUpdateService = function () {
         $http({
-            url: BASE_URL + 'edit/service?id=' + id ,
+            url: BASE_URL + 'edit/service?id=' + id,
             method: "GET",
             cache: false,
             headers: {
@@ -184,6 +218,9 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                     $scope.editServices = response.data.Data;
                     console.log($scope.editServices.images.before)
                     console.log($scope.editServices.images.after)
+                } else {
+                    document.getElementById('errorModel').innerHTML = response.data.Message;
+                    document.getElementById('errorModel').click();
                 }
             },
             function (error) {

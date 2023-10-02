@@ -122,7 +122,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img class="rounded-md" alt="Service Photos" id="image">
+                                                    <img ng-src="{{PreviewImage}}" ng-show="PreviewImage != null" class="rounded-md" alt="Service Photos" id="imagePreview">
                                                 </div>
                                             </div>
                                             <div
@@ -148,7 +148,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img class="rounded-md" alt="Service Banner" id="banner">
+                                                    <img ng-src="{{PreviewBanner}}" ng-show="PreviewBanner != null" class="rounded-md" alt="Service Banner" id="banner">
                                                 </div>
                                             </div>
                                             <div
@@ -231,7 +231,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img class="rounded-md" alt="Before Service Photos" id="before">
+                                                    <img ng-src="{{PreviewBefore}}" ng-show="PreviewBefore != null" class="rounded-md" alt="Before Service Photos" id="before">
                                                 </div>
                                             </div>
                                             <div
@@ -257,7 +257,7 @@
                                             <div class="grid grid-cols-10 gap-5 pl-4 pr-5">
                                                 <div
                                                     class="col-span-12 md:col-span-12 h-28 relative image-fit cursor-pointer zoom-in">
-                                                    <img class="rounded-md" alt="After Service Photos" id="after">
+                                                    <img ng-src="{{PreviewAfter}}" ng-show="PreviewAfter != null" class="rounded-md" alt="After Service Photos" id="after">
                                                 </div>
                                             </div>
                                             <div

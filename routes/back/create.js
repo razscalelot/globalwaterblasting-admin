@@ -77,7 +77,7 @@ router.post('/image', fileHelper.memoryUpload.single('image'), async (req, res) 
                         return responseManager.onError(error, res);
                     });
                 } else {
-                    return responseManager.badrequest({message:'Image file must be <= 3 MB, please try again'}, res);
+                    return responseManager.badrequest({message:'Image file must be <= 7 MB, please try again'}, res);
                 }
             } else {
                 return responseManager.badrequest({message:'Invalid file type only image files allowed, please try again'}, res);
@@ -108,7 +108,7 @@ router.post('/banner', fileHelper.memoryUpload.single('banner'), async (req, res
                         return responseManager.onError(error, res);
                     });
                 } else {
-                    return responseManager.badrequest({message:'Image file must be <= 3 MB, please try again'}, res);
+                    return responseManager.badrequest({message:'Image file must be <= 7 MB, please try again'}, res);
                 }
             } else {
                 return responseManager.badrequest({message:'Invalid file type only image files allowed, please try again'}, res);
@@ -139,7 +139,7 @@ router.post('/before', fileHelper.memoryUpload.single('before'), async (req, res
                         return responseManager.onError(error, res);
                     });
                 } else {
-                    return responseManager.badrequest({message:'Image file must be <= 3 MB, please try again'}, res);
+                    return responseManager.badrequest({message:'Image file must be <= 7 MB, please try again'}, res);
                 }
             } else {
                 return responseManager.badrequest({message:'Invalid file type only image files allowed, please try again'}, res);
@@ -170,7 +170,7 @@ router.post('/after', fileHelper.memoryUpload.single('after'), async (req, res) 
                         return responseManager.onError(error, res);
                     });
                 } else {
-                    return responseManager.badrequest({message:'Image file must be <= 3 MB, please try again'}, res);
+                    return responseManager.badrequest({message:'Image file must be <= 7 MB, please try again'}, res);
                 }
             } else {
                 return responseManager.badrequest({message:'Invalid file type only image files allowed, please try again'}, res);
@@ -199,7 +199,7 @@ router.post('/', async (req, res) => {
     const token = req.cookies.token;
     if (token) {
         let { servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, points } = req.body;
-        if (servicename && servicename != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '') {
+        if (servicename && servicename != '' &&image && image != '' && banner && banner != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && images && images.length > 0 && title && title != '' && longdesc1 && longdesc1 != '' && points && points.length > 0) {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findOne({ "servicename": servicename }).lean();
             if (serviceData == null) {

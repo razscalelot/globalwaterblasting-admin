@@ -14,6 +14,12 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewImage = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sImage = input.files[0];
                     $scope.serviceImageUploader();
                 });
@@ -54,6 +60,12 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewBanner = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sBanner = input.files[0];
                     $scope.serviceBannerUploader();
                 });
@@ -94,6 +106,12 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewBefore = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sBefore = input.files[0];
                     $scope.serviceBeforeUploader();
                 });
@@ -134,6 +152,12 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
             var valid_extensions = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG)$/i;
             if (valid_extensions.test(filename)) {
                 $(input.files).each(function () {
+                    var reader = new FileReader();
+                    reader.onload = function (input) {
+                        $scope.PreviewAfter = input.target.result;
+                        $scope.$apply();
+                    };
+                    reader.readAsDataURL(input.files[0]);
                     $scope.sAfter = input.files[0];
                     $scope.serviceAfterUploader();
                 });
