@@ -1,4 +1,4 @@
-app.controller("serviceController", ($scope, $http, HelperService, $window) => {
+app.controller("editServiceController", ($scope, $http, HelperService, $window) => {
     $scope.sImage = null;
     $scope.sBanner = null;
     $scope.sBefore = null;
@@ -167,24 +167,61 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
             );
         }
     };
-    $scope.createService = function () {
-        $scope.response = {};
-        console.log('$scope.points', $scope.points);
+
+    $scope.editServices = {};
+    var id = $window.location.search.split('?id=')[1];
+    $scope.getUpdateService = function () { 
         $http({
-            url: BASE_URL + 'create',
+            url: BASE_URL + 'edit/service?id=' + id ,
+            method: "GET",
+            cache: false,
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        }).then(
+            function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    $scope.editServices = response.data.Data;
+                    console.log($scope.editServices)
+                }
+            },
+            function (error) {
+                console.log(error);
+                console.error("Something Went Wrong! try again");
+            }
+        );
+    };
+    $scope.getUpdateService();
+
+
+    $scope.editPoints = [{ title: "", description: "" }];
+
+    $scope.addEditInputField = function () {
+        $scope.editServices.servicedetails.points.push({ title: "", description: "" });
+        console.log($scope.editServices);
+    };
+
+    $scope.removeEditInputField = function (index) {
+        $scope.editServices.servicedetails.points.splice(index, 1);
+    };
+
+    $scope.updateService = function (editServices) {
+        $http({
+            url: BASE_URL + 'edit',
             method: "POST",
             cache: false,
             data: {
-                servicename: $scope.servicename,
-                image: $scope.service_image,
-                banner: $scope.service_banner,
-                shortdesc: $scope.shortdesc,
-                longdesc: $scope.longdesc,
-                before: $scope.service_before,
-                after: $scope.service_after,
-                title: $scope.title,
-                longdesc1: $scope.longdesc1,
-                points: $scope.points
+                serviceid: editServices._id,
+                servicename: editServices.servicename,
+                image: (editServices.service_image == null) ? editServices.image : editServices.service_image,
+                banner: (editServices.service_banner == null) ? editServices.banner : editServices.banner,
+                shortdesc: editServices.shortdesc,
+                longdesc: editServices.longdesc,
+                before: (editServices.service_before == null) ? editServices.before : editServices.service_before,
+                after: (editServices.service_after == null) ? editServices.after : editServices.service_after,
+                title: editServices.servicedetails.title,
+                longdesc1: editServices.servicedetails.longdesc1,
+                points: editServices.servicedetails.points
             },
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
@@ -201,53 +238,11 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                 }
             },
             function (error) {
+                console.log("error", error);
                 $scope.response = error.data.Message
                 document.getElementById('errorModel').click();
             }
         );
     };
-
-    $scope.points = [{ title: "", description: "" }];
-
-    $scope.addInputField = function () {
-        $scope.points.push({ title: "", description: "" });
-    };
-
-    $scope.removeInputField = function (index) {
-        $scope.points.splice(index, 1);
-    };
-
-    $scope.services = {};
-    $scope.getService = function () {
-        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search, isDelete: $scope.isDelete, teammember: $scope.teammember, tags: $scope.selectedTags };
-        $http({
-            url: BASE_URL + 'service/list',
-            method: "POST",
-            data: request,
-            cache: false,
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-            },
-        }).then(
-            function (response) {
-                if (response.data.IsSuccess == true && response.data.Data != 0) {
-                    $scope.services = response.data.Data;
-                    $scope.pageNumberList = HelperService.paginator($scope.services.totalPages, $scope.page, 9);
-                }
-            },
-            function (error) {
-                console.log(error);
-                console.error("Something Went Wrong! try again");
-            }
-        );
-    };
-    $scope.getService();
-
-    $scope.onSearch = () => {
-        if ($scope.search.length > 2 || $scope.search.length == 0) {
-            $scope.page = 1;
-            $scope.getService();
-        }
-    }
 
 });
