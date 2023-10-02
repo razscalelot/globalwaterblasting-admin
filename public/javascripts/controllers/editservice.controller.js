@@ -206,7 +206,10 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
     };
 
     $scope.updateService = function (editServices) {
-        console.log("editServices", editServices);
+        console.log("editServices.before", editServices.before);
+        console.log("editServices.after", editServices.after);
+        console.log("$scope.service_before", $scope.service_before);
+        console.log("$scope.service_after", $scope.service_after);
         // $http({
         //     url: BASE_URL + 'edit',
         //     method: "POST",
