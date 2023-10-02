@@ -214,13 +214,13 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
             data: {
                 serviceid: editServices._id,
                 servicename: editServices.servicename,
-                image: ($scope.service_image != null) ? editServices.image : $scope.service_image,
-                banner: ($scope.service_banner != null) ? editServices.banner : $scope.service_banner,
+                image: ($scope.service_image == '') ? editServices.image : $scope.service_image,
+                banner: ($scope.service_banner == '') ? editServices.banner : $scope.service_banner,
                 shortdesc: editServices.shortdesc,
                 longdesc: editServices.longdesc,
                 images: {
-                    before: ($scope.service_before != null) ? editServices.images.before : $scope.service_before,
-                    after: ($scope.service_after != null) ? editServices.images.after : $scope.service_after,
+                    before: ($scope.service_before == '') ? editServices.images.before : $scope.service_before,
+                    after: ($scope.service_after == '') ? editServices.images.after : $scope.service_after,
                 },
                 title: editServices.servicedetails.title,
                 longdesc1: editServices.servicedetails.longdesc,
