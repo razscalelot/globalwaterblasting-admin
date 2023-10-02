@@ -207,62 +207,45 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
     };
 
     $scope.updateService = function (editServices) {
-        console.log("editServices", editServices);
-
-        console.log("image", $scope.service_image);
-        console.log("banner",$scope.service_banner);
-        console.log("before",$scope.service_before);
-        console.log("after", $scope.service_after);
-
-        console.log("image", editServices.image);
-        console.log("banner",editServices.banner);
-        console.log("before", editServices.images.before);
-        console.log("after", editServices.images.after);
-
-        
-        console.log("image", ($scope.service_image == '') ? editServices.image : $scope.service_image);
-        console.log("banner",($scope.service_banner == '') ? editServices.banner : $scope.service_banner);
-        console.log("before", ($scope.service_before == '') ? editServices.images.before : $scope.service_before);
-        console.log("after", ($scope.service_after == '') ? editServices.images.after : $scope.service_after);
-        // $http({
-        //     url: BASE_URL + 'edit',
-        //     method: "POST",
-        //     cache: false,
-        //     data: {
-        //         serviceid: editServices._id,
-        //         servicename: editServices.servicename,
-        //         image: ($scope.service_image != null) ? editServices.image : $scope.service_image,
-        //         banner: ($scope.service_banner != null) ? editServices.banner : $scope.service_banner,
-        //         shortdesc: editServices.shortdesc,
-        //         longdesc: editServices.longdesc,
-        //         images: {
-        //             before: ($scope.service_before != null) ? editServices.images.before : $scope.service_before,
-        //             after: ($scope.service_after != null) ? editServices.images.after : $scope.service_after,
-        //         },
-        //         title: editServices.servicedetails.title,
-        //         longdesc1: editServices.servicedetails.longdesc,
-        //         points: editServices.servicedetails.points
-        //     },
-        //     headers: {
-        //         "Content-Type": "application/json; charset=UTF-8",
-        //     },
-        // }).then(
-        //     function (response) {
-        //         if (response.data.IsSuccess == true && response.data.Data != 0) {
-        //             $scope.response = response.data.Message
-        //             document.getElementById('successModel').click();
-        //             window.location.href = "/service";
-        //         } else {
-        //             document.getElementById('errorModel').innerHTML = response.data.Message;
-        //             document.getElementById('errorModel').click();
-        //         }
-        //     },
-        //     function (error) {
-        //         console.log("error", error);
-        //         $scope.response = error.data.Message
-        //         document.getElementById('errorModel').click();
-        //     }
-        // );
+        $http({
+            url: BASE_URL + 'edit',
+            method: "POST",
+            cache: false,
+            data: {
+                serviceid: editServices._id,
+                servicename: editServices.servicename,
+                image: ($scope.service_image != null) ? editServices.image : $scope.service_image,
+                banner: ($scope.service_banner != null) ? editServices.banner : $scope.service_banner,
+                shortdesc: editServices.shortdesc,
+                longdesc: editServices.longdesc,
+                images: {
+                    before: ($scope.service_before != null) ? editServices.images.before : $scope.service_before,
+                    after: ($scope.service_after != null) ? editServices.images.after : $scope.service_after,
+                },
+                title: editServices.servicedetails.title,
+                longdesc1: editServices.servicedetails.longdesc,
+                points: editServices.servicedetails.points
+            },
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        }).then(
+            function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    $scope.response = response.data.Message
+                    document.getElementById('successModel').click();
+                    window.location.href = "/service";
+                } else {
+                    document.getElementById('errorModel').innerHTML = response.data.Message;
+                    document.getElementById('errorModel').click();
+                }
+            },
+            function (error) {
+                console.log("error", error);
+                $scope.response = error.data.Message
+                document.getElementById('errorModel').click();
+            }
+        );
     };
 
 });
