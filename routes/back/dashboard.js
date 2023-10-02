@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
             contactusCount: contactusCount,
             offerCount: offerCount,
             quoteCount: quoteCount,
-            serviceCount: serviceCount
+            serviceCount: serviceCount,
             message: req.flash('message')
         });
     } else {
