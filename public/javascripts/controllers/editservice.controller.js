@@ -207,10 +207,10 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
     };
 
     $scope.updateService = function (editServices) {
-        console.log("editServices.image", editServices.image);
-        console.log("editServices.banner", editServices.banner);
-        console.log("$scope.service_image", $scope.service_before);
-        console.log("$scope.service_banner", $scope.service_banner);
+        console.log("image", ($scope.service_image == null) ? editServices.image : $scope.service_image);
+        console.log("banner",($scope.service_banner == null) ? editServices.banner : $scope.service_banner);
+        console.log("before", ($scope.service_before == null) ? editServices.before : $scope.service_before);
+        console.log("after", ($scope.service_after == null) ? editServices.after : $scope.service_after);
         // $http({
         //     url: BASE_URL + 'edit',
         //     method: "POST",
