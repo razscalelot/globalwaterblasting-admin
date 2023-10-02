@@ -215,7 +215,7 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
         //         serviceid: editServices._id,
         //         servicename: editServices.servicename,
         //         image: (editServices.service_image == null) ? editServices.image : $scope.service_image,
-        //         banner: (editServices.service_banner == null) ? editServices.banner : $scope.banner,
+        //         banner: (editServices.service_banner == null) ? editServices.banner : $scope.service_banner,
         //         shortdesc: editServices.shortdesc,
         //         longdesc: editServices.longdesc,
         //         images: {
