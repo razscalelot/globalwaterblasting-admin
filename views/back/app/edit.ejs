@@ -362,13 +362,12 @@
                         </div>
                         <!-- END: Product Variant -->
                         <div class="flex justify-end flex-col md:flex-row gap-2 mt-5">
-                            <button type="reset"
-                                class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Cancel</button>
+                            <button type="reset" class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Cancel</button>
                             <button type="submit" class="btn py-3 border-slate-300 dark:border-darkmode-400 text-slate-500 w-full md:w-52">Save & Add New Service</button>
-                            <input type="hidden" ng-model="editServices.image" autocomplete="off">
-                            <input type="hidden" ng-model="editServices.banner" autocomplete="off">
-                            <input type="hidden" ng-model="editServices.images.before" autocomplete="off">
-                            <input type="hidden" ng-model="editServices.images.after" autocomplete="off">
+                            <input type="hidden" value="{{editServices.image}}" ng-model="editServices.image" autocomplete="off">
+                            <input type="hidden" value="{{editServices.banner}}" ng-model="editServices.banner" autocomplete="off">
+                            <input type="hidden" value="{{editServices.images.before}}" ng-model="editServices.images.before" autocomplete="off">
+                            <input type="hidden" value="{{editServices.images.after}}" ng-model="editServices.images.after" autocomplete="off">
                             <button type="button" class="btn py-3 btn-primary w-full md:w-52" ng-click="updateService(editServices)">Save</button>
                             <!-- <input type="submit" class="btn py-3 btn-primary w-full md:w-52" value="Save"/> -->
                         </div>
