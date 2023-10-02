@@ -206,6 +206,7 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
     };
 
     $scope.updateService = function (editServices) {
+        console.log("editServices", editServices);
         $http({
             url: BASE_URL + 'edit',
             method: "POST",
@@ -218,8 +219,8 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                 shortdesc: editServices.shortdesc,
                 longdesc: editServices.longdesc,
                 images: {
-                    before: (editServices.service_before == null) ? editServices.images.before : editServices.service_before,
-                    after: (editServices.service_after == null) ? editServices.images.after : editServices.service_after,
+                    before: (editServices.service_before == null) ? editServices.before : editServices.service_before,
+                    after: (editServices.service_after == null) ? editServices.after : editServices.service_after,
                 },
                 title: editServices.servicedetails.title,
                 longdesc1: editServices.servicedetails.longdesc1,
