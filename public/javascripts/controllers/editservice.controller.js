@@ -223,11 +223,11 @@ app.controller("editServiceController", ($scope, $http, HelperService, $window) 
                 shortdesc: editServices.shortdesc,
                 longdesc: editServices.longdesc,
                 images: {
-                    before: ($scope.service_before != null) ? editServices.before : $scope.service_before,
-                    after: ($scope.service_after != null) ? editServices.after : $scope.service_after,
+                    before: ($scope.service_before != null) ? editServices.images.before : $scope.service_before,
+                    after: ($scope.service_after != null) ? editServices.images.after : $scope.service_after,
                 },
                 title: editServices.servicedetails.title,
-                longdesc1: editServices.servicedetails.longdesc1,
+                longdesc1: editServices.servicedetails.longdesc,
                 points: editServices.servicedetails.points
             },
             headers: {
