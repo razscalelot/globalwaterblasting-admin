@@ -31,4 +31,9 @@ app.controller("quoteController", ($scope, $http, HelperService) => {
             $scope.getQuote();
         }
     }
+
+    $scope.switchPage = (n) => {
+        $scope.page = n;
+        $scope.getContactus();
+    }
 });

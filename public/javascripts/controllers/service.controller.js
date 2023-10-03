@@ -310,4 +310,9 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
         $scope.serviceDeleteName = name;
     }
 
+    $scope.switchPage = (n) => {
+        $scope.page = n;
+        $scope.getContactus();
+    }
+
 });
