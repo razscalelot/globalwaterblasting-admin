@@ -243,7 +243,7 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
 
     $scope.services = {};
     $scope.getService = function () {
-        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search, isDelete: $scope.isDelete, teammember: $scope.teammember, tags: $scope.selectedTags };
+        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search };
         $http({
             url: BASE_URL + 'service/list',
             method: "POST",
