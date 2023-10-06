@@ -95,30 +95,30 @@ router.post('/changepassword' , async (req , res) => {
                 };
                 const updateUser = await primary.model(constants.MODELS.users , userModel).findByIdAndUpdate(user._id , { $set: obj});
                 res.clearCookie('token');
-                res.redirect('/');
+                return res.redirect('/');
               }else{
-                res.redirect('/profile');
+                return res.redirect('/profile');
               }
             }else{
-              res.redirect('/profile');
+              return res.redirect('/profile');
             }
           }else{
-            res.redirect('/profile');
+            return res.redirect('/profile');
           }
         }else{
           res.clearCookie('token');
-          res.redirect('/');
+          return res.redirect('/');
         }
       }else{
-        res.redirect('/profile');
+        return res.redirect('/profile');
       }
     } catch (error) {
       res.clearCookie('token');
-      res.redirect('/');
+      return res.redirect('/');
     }
   }else{
     res.clearCookie('token');
-    res.redirect('/');
+    return res.redirect('/');
   }
 })
 

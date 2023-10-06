@@ -19,9 +19,9 @@ function validateEmail(email) {
 router.get('/', function(req, res, next) {
   const token = req.cookies.token;
   if(token){
-    res.redirect('/dashboard');
+    return res.redirect('/dashboard');
   }else{
-    res.render('back/app/login', { title: 'Login || Global Water Blasting', layout: false, message: req.flash('message') });
+    return res.render('back/app/login', { title: 'Login || Global Water Blasting', layout: false, message: req.flash('message') });
   }
 });
 
@@ -40,22 +40,22 @@ router.post('/' , async (req , res) => {
           if(user.email === email && decryptPassword === password){
             const token = jwt.sign({'user_id':user._id} , process.env.AUTH_KEY , {expiresIn: '30d'})
             res.cookie('token' , token);
-            res.redirect('/dashboard');
+            return res.redirect('/dashboard');
           }else{
             req.flash('message', 'Invalid mobile or password please try again');
-            res.redirect('/');
+            return res.redirect('/');
           }
         }else{
           req.flash('message', 'Invalid mobile or password please try again');
-          res.redirect('/');
+          return res.redirect('/');
         }
       }else{
         req.flash('message', 'Invalid password, please try again');
-        res.redirect('/');
+        return res.redirect('/');
       }
     }else{
       req.flash('message', 'Invalid email, please try again');
-      res.redirect('/');
+      return res.redirect('/');
     }
   }
 })
