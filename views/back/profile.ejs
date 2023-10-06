@@ -1,166 +1,89 @@
 <!-- BEGIN: Content -->
 <div class="content">
-  <div class="intro-y flex items-center mt-8">
-      <h2 class="text-lg font-medium mr-auto">
-          Update Profile
-      </h2>
-  </div>
-  <div class="grid grid-cols-12 gap-6">
-      <!-- BEGIN: Profile Menu -->
-      <!-- <div class="col-span-12 lg:col-span-4 2xl:col-span-3 flex lg:block flex-col-reverse">
-          <div class="intro-y box mt-5">
-              <div class="relative flex items-center p-5">
-                  <div class="w-12 h-12 image-fit">
-                      <img alt="Midone - HTML Admin Template" class="rounded-full" src="assets/images/profile-10.jpg">
-                  </div>
-                  <div class="ml-4 mr-auto">
-                      <div class="font-medium text-base"><%= admin.name %></div>
-                      <div class="text-slate-500">Frontend Engineer</div>
-                  </div>
-                  <div class="dropdown">
-                      <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <i data-lucide="more-horizontal" class="w-5 h-5 text-slate-500"></i> </a>
-                      <div class="dropdown-menu w-56">
-                          <ul class="dropdown-content">
-                              <li>
-                                  <h6 class="dropdown-header">
-                                      Export Options
-                                  </h6>
-                              </li>
-                              <li>
-                                  <hr class="dropdown-divider">
-                              </li>
-                              <li>
-                                  <a href="" class="dropdown-item"> <i data-lucide="activity" class="w-4 h-4 mr-2"></i> English </a>
-                              </li>
-                              <li>
-                                  <a href="" class="dropdown-item">
-                                      <i data-lucide="box" class="w-4 h-4 mr-2"></i> Indonesia 
-                                      <div class="text-xs text-white px-1 rounded-full bg-danger ml-auto">10</div>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="" class="dropdown-item"> <i data-lucide="layout" class="w-4 h-4 mr-2"></i> English </a>
-                              </li>
-                              <li>
-                                  <a href="" class="dropdown-item"> <i data-lucide="sidebar" class="w-4 h-4 mr-2"></i> Indonesia </a>
-                              </li>
-                              <li>
-                                  <hr class="dropdown-divider">
-                              </li>
-                              <li>
-                                  <div class="flex p-1">
-                                      <button type="button" class="btn btn-primary py-1 px-2">Settings</button>
-                                      <button type="button" class="btn btn-secondary py-1 px-2 ml-auto">View Profile</button>
-                                  </div>
-                              </li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-              <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                  <a class="flex items-center text-primary font-medium" href=""> <i data-lucide="activity" class="w-4 h-4 mr-2"></i> Personal Information </a>
-                  <a class="flex items-center mt-5" href=""> <i data-lucide="box" class="w-4 h-4 mr-2"></i> Account Settings </a>
-                  <a class="flex items-center mt-5" href=""> <i data-lucide="lock" class="w-4 h-4 mr-2"></i> Change Password </a>
-                  <a class="flex items-center mt-5" href=""> <i data-lucide="settings" class="w-4 h-4 mr-2"></i> User Settings </a>
-              </div>
-              <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
-                  <a class="flex items-center" href=""> <i data-lucide="activity" class="w-4 h-4 mr-2"></i> Email Settings </a>
-                  <a class="flex items-center mt-5" href=""> <i data-lucide="box" class="w-4 h-4 mr-2"></i> Saved Credit Cards </a>
-                  <a class="flex items-center mt-5" href=""> <i data-lucide="lock" class="w-4 h-4 mr-2"></i> Social Networks </a>
-                  <a class="flex items-center mt-5" href=""> <i data-lucide="settings" class="w-4 h-4 mr-2"></i> Tax Information </a>
-              </div>
-              <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400 flex">
-                  <button type="button" class="btn btn-primary py-1 px-2">New Group</button>
-                  <button type="button" class="btn btn-outline-secondary py-1 px-2 ml-auto">New Quick Link</button>
-              </div>
-          </div>
-      </div> -->
-      <!-- END: Profile Menu -->
-      <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-          <!-- BEGIN: Display Information -->
-          <div class="intro-y box lg:mt-5">
-              <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                  <h2 class="font-medium text-base mr-auto">
-                      Display Information
-                  </h2>
-              </div>
-              <form class="p-5" method="post" action="/profile">
-                  <div class="flex flex-col-reverse xl:flex-row flex-col">
-                      <div class="flex-1 mt-6 xl:mt-0">
-                          <div class="grid grid-cols-12 gap-x-5">
-                              <div class="col-span-12">
-                                  <div class="mt-3">
-                                      <label for="update-profile-form-5" class="form-label">Name</label>
-                                      <input id="update-profile-form-1" type="text" name="fname" class="form-control" placeholder="Input text" value=<%= admin.name %> >
-                                  </div>
-                              </div>
-                              <div class="col-span-12">
-                                  <div class="mt-3">
-                                      <label for="update-profile-form-5" class="form-label">Phone Number </label>
-                                      <input id="update-profile-form-1" type="text" name="fname" class="form-control" placeholder="Phone number" readonly value=<%= admin.mobile %> >
-                                  </div>
-                              </div>
-                              <div class="col-span-12">
-                                  <div class="mt-3">
-                                      <label for="update-profile-form-5" class="form-label">Email</label>
-                                      <input id="update-profile-form-1" type="email" name="email" class="form-control" placeholder="Input text" readonly value=<%= admin.email %> >
-                                  </div>
-                              </div>
-                          </div>
-                          <button type="submit" class="btn btn-primary w-20 mt-3">Save</button>
-                      </div>
-                      <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
-                          <div class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5">
-                              <div class="h-40 relative image-fit cursor-pointer zoom-in mx-auto">
-                                  <img class="rounded-md" alt="Midone - HTML Admin Template" src="assets/images/profile-10.jpg">
-                                  <div title="Remove this profile photo?" class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"> <i data-lucide="x" class="w-4 h-4"></i> </div>
-                              </div>
-                              <div class="mx-auto cursor-pointer relative mt-5">
-                                  <button type="button" class="btn btn-primary w-full">Change Photo</button>
-                                  <input type="file" name="profile_picture" class="w-full h-full top-0 left-0 absolute opacity-0">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </form>
-          </div>
-          <!-- END: Display Information -->
-          <!-- BEGIN: Personal Information -->
-          <div class="intro-y box mt-5">
-              <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
-                  <h2 class="font-medium text-base mr-auto">
-                      Change Password
-                  </h2>
-              </div>
-              <form method="post" action="/profile/changepassword" class="p-5">
-                  <div class="grid grid-cols-12 gap-x-5">
-                      <div class="col-span-12">
-                          <div class="mt-3">
-                              <label for="update-profile-form-5" class="form-label">Current password</label>
-                              <input id="update-profile-form-1" type="password" name="current_password" class="form-control" placeholder="Current password" required>
-                          </div>
-                      </div>
-                      <div class="col-span-12">
-                          <div class="mt-3">
-                              <label for="update-profile-form-5" class="form-label">New password</label>
-                              <input id="update-profile-form-1" type="password" name="new_password" class="form-control" placeholder="New password" required>
-                          </div>
-                      </div>
-                      <div class="col-span-12">
-                          <div class="mt-3">
-                              <label for="update-profile-form-5" class="form-label">Conform new password</label>
-                              <input id="update-profile-form-1" type="password" name="conform_new_password" class="form-control" placeholder="Conform new password" required>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="flex justify-end mt-4">
-                      <button type="submit" class="btn btn-primary w-20 mr-auto">Save</button>
-                      <a href="" class="text-danger flex items-center"> <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i> Delete Account </a>
-                  </div>
-              </form>
-          </div>
-          <!-- END: Personal Information -->
-      </div>
-  </div>
+    <div class="intro-y flex items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto">
+            Update Profile
+        </h2>
+    </div>
+    <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-12 lg:col-span-12 2xl:col-span-12">
+            <!-- BEGIN: Display Information -->
+            <div class="intro-y box lg:mt-5">
+                <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+                    <h2 class="font-medium text-base mr-auto">
+                        Display Information
+                    </h2>
+                </div>
+                <form class="p-5" method="post" action="/profile">
+                    <div class="flex flex-col-reverse xl:flex-row flex-col">
+                        <div class="flex-1 mt-6 xl:mt-0">      
+                            <div class="grid grid-cols-12 gap-x-5">
+                                <div class="col-span-4">
+                                    <div class="mt-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input id="name" type="text" name="name" class="form-control"
+                                            placeholder="Input text" value="<%=admin.name %>" >
+                                    </div>
+                                </div>
+                                <div class="col-span-4">
+                                    <div class="mt-3">
+                                        <label for="phone" class="form-label">Phone Number </label>
+                                        <input id="phone" type="text" name="phone" class="form-control"
+                                            placeholder="Phone number" readonly value="<%=admin.mobile %>" >
+                                    </div>
+                                </div>
+                                <div class="col-span-4">
+                                    <div class="mt-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input id="email" type="email" name="email" class="form-control"
+                                            placeholder="Input text" readonly value="<%=admin.email %>" >
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-20 mt-3">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- END: Display Information -->
+            <!-- BEGIN: Personal Information -->
+            <div class="intro-y box mt-5">
+                <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+                    <h2 class="font-medium text-base mr-auto">
+                        Change Password
+                    </h2>
+                </div>
+                <form method="post" action="/profile/changepassword" class="p-5">
+                    <div class="grid grid-cols-12 gap-x-5">
+                        <div class="col-span-4">
+                            <div class="mt-3">
+                                <label for="current_password" class="form-label">Current password</label>
+                                <input id="current_password" type="password" name="current_password"
+                                    class="form-control" placeholder="Current password" required>
+                            </div>
+                        </div>
+                        <div class="col-span-4">
+                            <div class="mt-3">
+                                <label for="new_password" class="form-label">New password</label>
+                                <input id="new_password" type="password" name="new_password"
+                                    class="form-control" placeholder="New password" required>
+                            </div>
+                        </div>
+                        <div class="col-span-4">
+                            <div class="mt-3">
+                                <label for="conform_new_password" class="form-label">Conform new password</label>
+                                <input id="conform_new_password" type="password" name="conform_new_password"
+                                    class="form-control" placeholder="Conform new password" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end mt-4">
+                        <button type="submit" class="btn btn-primary w-20 mr-auto">Save</button>
+                    </div>
+                </form>
+            </div>
+            <!-- END: Personal Information -->
+        </div>
+    </div>
 </div>
 <!-- END: Content -->

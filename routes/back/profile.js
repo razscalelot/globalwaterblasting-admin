@@ -44,16 +44,15 @@ router.post('/' , async (req , res) => {
       let primary = mongoConnection.useDb(constants.DEFAULT_DB);
       let user = await primary.model(constants.MODELS.users , userModel).findById(user_id).select('-password -tc -createdBy -updatedBy').lean();
       if(user){
-        const {fname , lname , email } = req.body;
-        if(fname && fname != '' && lname && lname != '' && email && email != ''){
+        const {name , phone, email } = req.body;
+        if(name && name != '' && email && email != ''){
           const obj = {
-            fname: fname,
-            lname: lname,
+            name: name,
+            mobile: phone,
             email: email,
-            createAt: "",
             updatedAt: Date.now(),
           }
-          let user = await primary.model(constants.MODELS.users , userModel).findByIdAndUpdate(user_id , { $set: obj});
+          await primary.model(constants.MODELS.users , userModel).findByIdAndUpdate(user_id , obj);
           res.redirect('/profile')
         }else
         res.render('back/profile', {
