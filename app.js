@@ -22,6 +22,7 @@ const swal = require('sweetalert');
 const backpaths = [
   {pathUrl: "/", routeFile: 'login'},
   {pathUrl: "/dashboard", routeFile: 'dashboard'},
+  {pathUrl: "/profile", routeFile: 'profile'},
   {pathUrl: "/contactus", routeFile: 'contactus'},
   {pathUrl: "/quote", routeFile: 'quote'},
   {pathUrl: "/offer", routeFile: 'offer'},
