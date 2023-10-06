@@ -3,46 +3,31 @@ var router = express.Router();
 const mongoConnection = require('../../utilities/connections');
 const constants = require('../../utilities/constants');
 const serviceModel = require('../../models/services.model');
+const responseManager = require('../../utilities/response.manager');
 const mongoose = require('mongoose');
 const fs = require('fs');
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
+    console.log("req.body", req.body);
     const token = req.cookies.token;
     if (token) {
-        const { id } = req.query;
+        const { id } = req.body;
         if (id && id != '' && mongoose.Types.ObjectId.isValid(id)) {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(id).lean();
             console.log("serviceData", serviceData);
             if (serviceData && serviceData != null) {
-                console.log("images", serviceData.image, serviceData.banner, serviceData.images.before, serviceData.images.after);
                 try {
-                    if (serviceData.image != '') {
-                        fs.unlinkSync("public/uploads/" + serviceData.image);
-                    }
-                    if (serviceData.banner != '') {
-                        fs.unlinkSync("public/uploads/" + serviceData.banner);
-                    }
-                    if (serviceData.images.before != '') {
-                        fs.unlinkSync("public/uploads/" + serviceData.images.before);
-                    }
-                    if (serviceData.images.after != '') {
-                        fs.unlinkSync("public/uploads/" + serviceData.images.after);
-                    }
                     await primary.model(constants.MODELS.services, serviceModel).findByIdAndRemove(id);
-                    req.flash('message', 'Service removed successfully!')
-                    res.redirect('/service');
+                    return responseManager.onSuccess('Service removed successfully!', 1, res);
                 } catch (err) {
-                    req.flash('message', err.message);
-                    res.redirect('/service');
+                    return responseManager.badrequest({message: err.message}, res);
                 }
             } else {
-                req.flash('message', 'Invalid service id to remove service, please try again')
-                res.redirect('/service');
+                return responseManager.badrequest({message: 'Invalid service id to remove service, please try again'}, res);
             }
         } else {
-            req.flash('message', 'Invalid service id to remove service, please try again')
-            res.redirect('/service');
+            return responseManager.badrequest({message: 'Invalid service id to remove service, please try again'}, res);
         }
     } else {
         res.redirect('/');

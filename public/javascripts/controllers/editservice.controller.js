@@ -1,4 +1,4 @@
-app.controller("serviceController", ($scope, $http, HelperService, $window) => {
+app.controller("editServiceController", ($scope, $http, HelperService, $window) => {
     $scope.sImage = null;
     $scope.sBanner = null;
     $scope.sBefore = null;
@@ -7,6 +7,7 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
     $scope.service_banner = "";
     $scope.service_before = "";
     $scope.service_after = "";
+    $scope.response = {};
     $scope.serviceImage = (input) => {
         $scope.sImage = null;
         if (input.files && input.files[0]) {
@@ -40,15 +41,18 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                 headers: { "Content-Type": undefined, "Process-Data": false, },
             }).then(
                 function (response) {
+                    console.log("response", response);
                     if (response.data.IsSuccess == true) {
                         if (response.data.Data) {
                             $scope.service_image = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -90,11 +94,13 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                         if (response.data.Data) {
                             $scope.service_banner = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -136,11 +142,13 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                         if (response.data.Data) {
                             $scope.service_before = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
@@ -182,33 +190,78 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                         if (response.data.Data) {
                             $scope.service_after = response.data.Data.url;
                         } else {
-                            swal("", 'Some-thing went wrong while uploading the file! Please try again', "error");
+                            $scope.response = response.data.Message
+                            document.getElementById('errorModel').click();
                         }
                     }
                 }, function (error) {
-                    console.error(error);
+                    $scope.response = error.data.Message
+                    document.getElementById('errorModel').click();
                 }
             );
         }
     };
-    $scope.createService = function () {
-        $scope.response = {};
-        console.log('$scope.points', $scope.points);
+
+    $scope.editServices = {};
+    var id = $window.location.search.split('?id=')[1];
+    $scope.getUpdateService = function () {
         $http({
-            url: BASE_URL + 'create',
+            url: BASE_URL + 'edit/service?id=' + id,
+            method: "GET",
+            cache: false,
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        }).then(
+            function (response) {
+                if (response.data.IsSuccess == true && response.data.Data != 0) {
+                    $scope.editServices = response.data.Data;
+                    console.log($scope.editServices.images.before)
+                    console.log($scope.editServices.images.after)
+                } else {
+                    document.getElementById('errorModel').innerHTML = response.data.Message;
+                    document.getElementById('errorModel').click();
+                }
+            },
+            function (error) {
+                console.log(error);
+                console.error("Something Went Wrong! try again");
+            }
+        );
+    };
+    $scope.getUpdateService();
+
+
+    $scope.editPoints = [{ title: "", description: "" }];
+
+    $scope.addEditInputField = function () {
+        $scope.editServices.servicedetails.points.push({ title: "", description: "" });
+        console.log($scope.editServices);
+    };
+
+    $scope.removeEditInputField = function (index) {
+        $scope.editServices.servicedetails.points.splice(index, 1);
+    };
+
+    $scope.updateService = function (editServices) {
+        $http({
+            url: BASE_URL + 'edit',
             method: "POST",
             cache: false,
             data: {
-                servicename: $scope.servicename,
-                image: $scope.service_image,
-                banner: $scope.service_banner,
-                shortdesc: $scope.shortdesc,
-                longdesc: $scope.longdesc,
-                before: $scope.service_before,
-                after: $scope.service_after,
-                title: $scope.title,
-                longdesc1: $scope.longdesc1,
-                points: $scope.points
+                serviceid: editServices._id,
+                servicename: editServices.servicename,
+                image: ($scope.service_image == '') ? editServices.image : $scope.service_image,
+                banner: ($scope.service_banner == '') ? editServices.banner : $scope.service_banner,
+                shortdesc: editServices.shortdesc,
+                longdesc: editServices.longdesc,
+                images: {
+                    before: ($scope.service_before == '') ? editServices.images.before : $scope.service_before,
+                    after: ($scope.service_after == '') ? editServices.images.after : $scope.service_after,
+                },
+                title: editServices.servicedetails.title,
+                longdesc1: editServices.servicedetails.longdesc,
+                points: editServices.servicedetails.points
             },
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
@@ -225,94 +278,11 @@ app.controller("serviceController", ($scope, $http, HelperService, $window) => {
                 }
             },
             function (error) {
+                console.log("error", error);
                 $scope.response = error.data.Message
                 document.getElementById('errorModel').click();
             }
         );
     };
-
-    $scope.points = [{ title: "", description: "" }];
-
-    $scope.addInputField = function () {
-        $scope.points.push({ title: "", description: "" });
-    };
-
-    $scope.removeInputField = function (index) {
-        $scope.points.splice(index, 1);
-    };
-
-    $scope.services = {};
-    $scope.getService = function () {
-        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search };
-        $http({
-            url: BASE_URL + 'service/list',
-            method: "POST",
-            data: request,
-            cache: false,
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-            },
-        }).then(
-            function (response) {
-                if (response.data.IsSuccess == true && response.data.Data != 0) {
-                    $scope.services = response.data.Data;
-                    $scope.pageNumberList = HelperService.paginator($scope.services.totalPages, $scope.page, 9);
-                }
-            },
-            function (error) {
-                console.log(error);
-                console.error("Something Went Wrong! try again");
-            }
-        );
-    };
-    $scope.getService();
-
-    $scope.onSearch = () => {
-        if ($scope.search.length > 2 || $scope.search.length == 0) {
-            $scope.page = 1;
-            $scope.getService();
-        }
-    }
-
-    $scope.deleteService = function (id) {
-        $scope.response = {};
-        $http({
-            url: BASE_URL + 'remove',
-            method: "POST",
-            data: { id: id },
-            cache: false,
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-            },
-        }).then(
-            function (response) {
-                console.log("response", response);
-                if (response.data.IsSuccess == true && response.data.Data != 0) {
-                    $scope.response = response.data.Message
-                    document.getElementById('successModel').click();
-                    $scope.getService();
-                } else {
-                    $scope.response = response.data.Message
-                    document.getElementById('errorModel').click();
-                }
-            },
-            function (error) {
-                $scope.response = error.data.Message
-                document.getElementById('errorModel').click();
-            }
-        );
-    }
-
-    $scope.deleteModal = function(id, name){
-        console.log("id", id);
-        document.getElementById('serviceDeleteModal').click();
-        $scope.serviceDeleteID = id;
-        $scope.serviceDeleteName = name;
-    }
-
-    $scope.switchPage = (n) => {
-        $scope.page = n;
-        $scope.getContactus();
-    }
 
 });

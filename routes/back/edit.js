@@ -18,6 +18,13 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({ storage })
+const slugify = str =>
+    str
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
 
 router.get('/', async (req, res) => {
     const token = req.cookies.token;
@@ -27,7 +34,7 @@ router.get('/', async (req, res) => {
             let primary = mongoConnection.useDb(constants.DEFAULT_DB);
             let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(id).lean();
             if (serviceData && serviceData != null) {
-                res.render('back/app/edit', { title: 'Update Service || Global Water Blasting', active: 'service', serviceData: serviceData, message: req.flash('message') });
+                res.render('back/app/edit', { title: 'Update Service || Global Water Blasting', active: 'service', AWS_BUCKET_URI: process.env.AWS_BUCKET_URI, serviceData: serviceData, message: req.flash('message') });
             } else {
                 res.render('back/app/service', { title: 'Service || Global Water Blasting', active: 'service', message: req.flash('message') });
             }
@@ -62,53 +69,53 @@ router.get('/service', async (req, res) => {
     }
 });
 
-router.post('/', upload.fields([{ name: 'image' }, { name: 'banner' }, { name: 'before' }, { name: 'after' }]), async (req, res) => {
+router.post('/', async (req, res) => {
+    console.log("req.body", req.body);
     const token = req.cookies.token;
     if (token) {
-        let { serviceid, servicename, image, banner, shortdesc, longdesc, before, after, title, longdesc1, ptitle, desc } = req.body;
+        let { serviceid, servicename, image, banner, shortdesc, longdesc, images, title, longdesc1, points } = req.body;
         if (serviceid && serviceid != '' && mongoose.Types.ObjectId.isValid(serviceid)) {
-            let primary = mongoConnection.useDb(constants.DEFAULT_DB);
-            let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
-            if (serviceData && serviceData != null) {
-                let points = [];
-                for (var i = 0; i < ptitle.length; i++) {
+            if (servicename && servicename != '' && image && image != '' && banner && banner != '' && shortdesc && shortdesc != '' && longdesc && longdesc != '' && images && images != null && title && title != '' && longdesc1 && longdesc1 != '' && points && points.length > 0) {
+                let primary = mongoConnection.useDb(constants.DEFAULT_DB);
+                let serviceData = await primary.model(constants.MODELS.services, serviceModel).findById(serviceid).lean();
+                if (serviceData && serviceData != null) {
+                    let serviceslug = slugify(servicename);
                     let obj = {
-                        title: ptitle[i],
-                        decs: desc[i]
-                    };
-                    points.push(obj);
-                }
-                let obj = {
-                    servicename: servicename,
-                    image: (req.files['image'] == null) ? image : req.files['image'][0].filename,
-                    banner: (req.files['banner'] == null) ? banner : req.files['banner'][0].filename,
-                    shortdesc: shortdesc,
-                    longdesc: longdesc,
-                    images: {
-                        before: (req.files['before'] == null) ? before : req.files['before'][0].filename,
-                        after: (req.files['after'] == null) ? after : req.files['after'][0].filename,
-                    },
-                    servicedetails: {
-                        title: title,
-                        longdesc: longdesc1,
-                        points: points
+                        servicename: servicename,
+                        serviceslug: serviceslug,
+                        image: image,
+                        banner: banner,
+                        shortdesc: shortdesc,
+                        longdesc: longdesc,
+                        images: images,
+                        servicedetails: {
+                            title: title,
+                            longdesc: longdesc1,
+                            points: points
+                        }
                     }
-                }
-                let insertedData = await primary.model(constants.MODELS.services, serviceModel).findByIdAndUpdate(serviceid, obj);
-                if (insertedData && insertedData != null) {
-                    req.flash('message', 'Service updated successfully!');
-                    res.redirect('/service');
+                    let insertedData = await primary.model(constants.MODELS.services, serviceModel).findByIdAndUpdate(serviceid, obj);
+                    if (insertedData && insertedData != null) {
+                        return responseManager.onSuccess('Service updated successfully!', serviceData, res);
+                        // req.flash('message', 'Service updated successfully!');
+                        // res.redirect('/service');
+                    } else {
+                        return responseManager.badrequest({ message: 'Something went wrong, Please try again' }, res);
+                        // req.flash('message', 'Something went wrong, Please try again');
+                        // res.redirect('/service');
+                    }
                 } else {
-                    req.flash('message', 'Something went wrong, Please try again');
-                    res.redirect('/service');
+                    return responseManager.badrequest({ message: 'Invalid service id to update service, please try again' }, res);
+                    // req.flash('message', 'Invalid service id to update service, please try again');
+                    // res.redirect('/service');
                 }
             } else {
-                req.flash('message', 'Invalid service id to update service, please try again');
-                res.redirect('/service');
+                return responseManager.badrequest({ message: 'Invalid service name, descriprions, images and banner can not be empty, please try again' }, res);
             }
         } else {
-            req.flash('message', 'Invalid service id to update service, please try again');
-            res.redirect('/service');
+            return responseManager.badrequest({ message: 'Invalid service id to update service, please try again' }, res);
+            // req.flash('message', 'Invalid service id to update service, please try again');
+            // res.redirect('/service');
         }
     } else {
         res.redirect('/');

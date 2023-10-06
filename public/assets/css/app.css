@@ -19071,3 +19071,8 @@ html body{
 .right-6{
   right: 24px;
 }
+
+.disabled {
+    pointer-events:none; 
+    opacity:0.6;  
+}

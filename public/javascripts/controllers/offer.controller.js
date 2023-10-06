@@ -31,4 +31,9 @@ app.controller("offerController", ($scope, $http, HelperService) => {
             $scope.getOffer();
         }
     }
+
+    $scope.switchPage = (n) => {
+        $scope.page = n;
+        $scope.getContactus();
+    }
 });

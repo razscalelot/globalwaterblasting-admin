@@ -1,7 +1,7 @@
 app.controller("contactusController", ($scope, $http, HelperService) => {
     $scope.contactus = {};
     $scope.getContactus = function () {
-        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search, isDelete: $scope.isDelete, teammember: $scope.teammember, tags: $scope.selectedTags };
+        let request = { page: $scope.page, limit: $scope.limit, search: $scope.search };
         $http({
             url: BASE_URL + 'contactus/list',
             method: "POST",
@@ -30,5 +30,10 @@ app.controller("contactusController", ($scope, $http, HelperService) => {
             $scope.page = 1;
             $scope.getContactus();
         }
+    }
+
+    $scope.switchPage = (n) => {
+        $scope.page = n;
+        $scope.getContactus();
     }
 });

@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
-var bcrypt = require('bcrypt');
 const mongoConnection = require('../../utilities/connections');
 const constants = require('../../utilities/constants');
 const userModel = require('../../models/users.model');
+const helper = require('../../utilities/helper');
 
 
 router.get('/' , async (req , res) => {
@@ -13,8 +13,9 @@ router.get('/' , async (req , res) => {
     try {
       const {user_id} = jwt.verify(token , process.env.AUTH_KEY);
       let primary = mongoConnection.useDb(constants.DEFAULT_DB);
-      let user = await primary.model(constants.MODELS.users , userModel).findById(user_id).select('-password -tc -createdBy -updatedBy').lean();
+      let user = await primary.model(constants.MODELS.users , userModel).findById(user_id).select('-password -tc -createdBy -updatedBy -createAt -updatedAt').lean();
       if(user){
+        console.log("user :",user);
         res.render('back/profile', {
           title: 'Profile || Global Water Blasting',
           active: 'dashboard',
@@ -25,10 +26,12 @@ router.get('/' , async (req , res) => {
         res.redirect('/');
       }
     } catch (error) {
+      console.log("error :",error);
       res.clearCookie('token');
       res.redirect('/');
     }
   }else{
+    console.log("Logout...!");
     res.redirect('/');
   }
 });
@@ -81,22 +84,31 @@ router.post('/changepassword' , async (req , res) => {
         const {user_id} = jwt.verify(token , process.env.AUTH_KEY);
         let primary = mongoConnection.useDb(constants.DEFAULT_DB);
         let user = await primary.model(constants.MODELS.users , userModel).findById(user_id).lean();
-        if(current_password === user.password){
-          if(new_password === conform_new_password){
-            const saltRounds = 10;
-            const hashpassword = await bcrypt.hash(new_password , saltRounds);
-            const obj = {
-              password: hashpassword,
-              updatedAt: Date.now(),
+        if(user){
+          const decryptPassword = await helper.passwordDecryptor(user.password);
+          if(current_password === decryptPassword){
+            if(new_password === conform_new_password){
+              const encryptPassword = await helper.passwordEncryptor(new_password);
+              if(encryptPassword){
+                const obj = {
+                  password: encryptPassword,
+                  updatedAt: Date.now(),
+                };
+                const updateUser = await primary.model(constants.MODELS.users , userModel).findByIdAndUpdate(user._id , { $set: obj});
+                res.clearCookie('token');
+                res.redirect('/');
+              }else{
+                res.redirect('/profile');
+              }
+            }else{
+              res.redirect('/profile');
             }
-            const updateUser = await primary.model(constants.MODELS.users , userModel).findByIdAndUpdate(user._id , { $set: obj});
-            res.clearCookie('token');
-            res.redirect('/');
           }else{
             res.redirect('/profile');
           }
         }else{
-          res.redirect('/profile');
+          res.clearCookie('token');
+          res.redirect('/');
         }
       }else{
         res.redirect('/profile');
