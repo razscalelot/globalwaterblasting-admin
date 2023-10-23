@@ -39,7 +39,9 @@ router.post('/' , async (req , res) => {
           const decryptPassword = await helper.passwordDecryptor(user.password);
           if(user.email === email && decryptPassword === password){
             const token = jwt.sign({'user_id':user._id} , process.env.AUTH_KEY , {expiresIn: '30d'})
+            console.log("token", token);
             res.cookie('token' , token);
+            console.log(res.cookie('token' , token));
             return res.redirect('/dashboard');
           }else{
             req.flash('message', 'Invalid mobile or password please try again');

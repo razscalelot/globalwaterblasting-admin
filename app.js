@@ -13,6 +13,7 @@ let mongoose = require("mongoose");
 var expressLayouts = require('express-ejs-layouts');
 var flush = require('connect-flash');
 const swal = require('sweetalert');
+const helper = require('./utilities/helper');
 
 // const adminpaths = [
 //   { pathUrl: '/', routeFile: 'login'},
@@ -84,6 +85,8 @@ backpaths.forEach((path) => {
 app.use(function(req, res, next) {
   next(createError(404));
 });
+// let decPassword = helper.passwordDecryptor('U2FsdGVkX1+1c0GYhzKqncRvwTRvEmdsNOkJenH7YS2KcbwQgAb/uRzHcNTPbiOmyCtYHDdxOzjbJekLXjdpIijZOorWgCysdunuMEAgsHTcZOXE1dr7cH6zFpRbNd/jc59TRy7z6mLb0tuCfZRkrg==');
+// console.log("decPassword", decPassword);
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
